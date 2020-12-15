@@ -1,0 +1,327 @@
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  & .main {
+    width: 95%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 80px;
+
+    @media (max-width: 815px) {
+      display: block;
+    }
+
+    @media (max-width: 394px) {
+      margin-top: 55px;
+      margin-left: 10px;
+      margin-right: 10px;
+      text-align: center;
+    }
+
+    & .info-block-1 {
+      max-width: 300px;
+      max-height: 400px;
+      display: flex;
+      align-items: flex-start;
+
+      @media (max-width: 815px) {
+        max-height: 240px;
+        max-width: 350px;
+        margin: 0 auto;
+        padding-bottom: 20px;
+      }
+
+      @media (max-width: 394px) {
+        width: 300px;
+      }
+
+      & .headline {
+        height: 100%;
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        & span {
+          font-size: 1.5rem;
+          padding: 0;
+
+          @media (max-width: 394px) {
+            font-size: 1.2rem;
+            text-align: center;
+          }
+        }
+
+        & h1 {
+          font-size: 4rem;
+          line-height: 100%;
+          margin: 0;
+          padding: 0;
+
+          @media (max-width: 815px) {
+            font-size: 3.3rem;
+            width: 350px;
+          }
+
+          @media (max-width: 394px) {
+            max-width: 300px;
+            font-size: 2.9rem;
+            text-align: center;
+          }
+        }
+      }
+    }
+
+    & .beer-media {
+      width: 30%;
+      max-height: 350px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      @media (max-width: 815px) {
+        height: 280px;
+        margin: 0 auto;
+        margin-top: 30px;
+        margin-bottom: 30px;
+      }
+
+      @media (max-width: 394px) {
+        margin-bottom: 20px;
+        height: 240px;
+      }
+
+      img {
+        max-height: 350px;
+
+        @media (max-width: 815px) {
+          height: 280px;
+        }
+
+        @media (max-width: 394px) {
+          height: 240px;
+        }
+      }
+    }
+
+    & .info-block-2 {
+      width: 35%;
+
+      text-align: left;
+
+      @media (max-width: 815px) {
+        width: 350px;
+        margin: 0 auto;
+      }
+
+      @media (max-width: 394px) {
+        width: 300px;
+        padding: 0 0;
+      }
+
+      h5 {
+        font-size: 1.5rem;
+        letter-spacing: 1px;
+        margin-bottom: 10px;
+
+        @media (max-width: 815px) {
+          margin-bottom: 10px;
+        }
+
+        @media (max-width: 394px) {
+          margin-bottom: 15px;
+          font-size: 1.3rem;
+          text-align: center;
+          letter-spacing: 0.5px;
+        }
+      }
+
+      span {
+        font-family: var(--ff-sans);
+        line-height: 1.2;
+        font-size: 1rem;
+        margin-top: 20px;
+        margin-bottom: 20px;
+      }
+
+      & .abv-price-ibu-container-box {
+        width: 100%;
+        height: 120px;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: baseline;
+        margin-top: 20px;
+
+        & .alcohol {
+          display: block;
+          font-family: "Bebas Neue", cursive;
+          text-align: center;
+
+          & .alcohol-headline {
+            display: block;
+            font-family: "Bebas Neue", cursive;
+            text-align: center;
+            margin-bottom: 30px;
+            margin-right: 0px;
+          }
+
+          & .alcohol-value {
+            padding: 25px 20px;
+            border-radius: 100%;
+            background-color: #191919;
+            color: white;
+            margin-right: 0px;
+          }
+        }
+
+        & .price {
+          display: block;
+          font-family: "Bebas Neue", cursive;
+          text-align: center;
+
+          & .price-headline {
+            display: block;
+            font-family: "Bebas Neue", cursive;
+            text-align: center;
+            margin-bottom: 30px;
+            margin-right: 0px;
+          }
+
+          & .price-value {
+            padding: 25px 20px;
+            border-radius: 100%;
+            background-color: #191919;
+            color: white;
+            margin-right: 0px;
+          }
+        }
+
+        & .ibu {
+          display: block;
+          font-family: "Bebas Neue", cursive;
+          text-align: center;
+
+          & .ibu-headline {
+            display: block;
+            font-family: "Bebas Neue", cursive;
+            text-align: center;
+            margin-bottom: 30px;
+            margin-right: 0px;
+          }
+
+          & .ibu-value {
+            padding: 25px 20px;
+            border-radius: 100%;
+            background-color: #191919;
+            color: white;
+            margin-right: 0px;
+          }
+        }
+      }
+      & .full-details-container {
+        margin-top: 40px;
+
+        & .full-details {
+          padding: 10px 10px;
+          font-family: "Bebas Neue", cursive;
+          text-align: center;
+          border: 1px solid black;
+
+          &:hover {
+            background-color: black;
+            color: white;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+  & .shop-widget-form {
+    min-width: 30%;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    margin-top: 80px;
+
+    @media (max-width: 394px) {
+      width: 300px;
+      margin: 20px auto;
+    }
+
+    & .shop-quantity-controller {
+      width: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #191919;
+      color: white;
+
+      @media (max-width: 394px) {
+        width: 150px;
+      }
+
+      & button {
+        width: 30%;
+        background: none;
+        border: none;
+        color: white;
+        font-family: "Bebas Neue", cursive;
+        font-size: 1.5rem;
+        cursor: pointer;
+      }
+
+      & input {
+        width: 30%;
+        background: none;
+        border: none;
+        color: white;
+        font-family: "Bebas Neue", cursive;
+        font-size: 1.5rem;
+        text-align: center;
+        padding: 0% 5%;
+        border-left: 1px solid white;
+        border-right: 1px solid white;
+      }
+
+      /* Remove spinner  from number input Chrome, Safari, Edge, Opera */
+      & input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      /* Remove spinner from number input Firefox */
+      & input[type="number"] {
+        -moz-appearance: textfield;
+      }
+    }
+
+    & .shop-add-button {
+      min-width: 200px;
+      background-color: #1ba7cc;
+      color: black;
+      font-family: "Bebas Neue", sans-serif;
+      text-transform: uppercase;
+      font-size: 1.5rem;
+      letter-spacing: 2px;
+      padding: 20px;
+      border: none;
+
+      @media (max-width: 394px) {
+        width: 150px;
+        font-size: 1rem;
+        padding: 10px;
+      }
+
+      &:hover {
+        background-color: #191919;
+        color: white;
+        cursor: pointer;
+      }
+    }
+  }
+}

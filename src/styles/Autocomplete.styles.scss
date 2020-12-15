@@ -1,0 +1,27 @@
+.autocomplete-container {
+  width: 100%;
+  max-height: 300px;
+  overflow: scroll;
+  position: absolute;
+  top: 40px;
+  border-width: 0px 1px 1px 1px;
+  border-style: solid;
+  border-color: var(--clr-accent-700);
+  background-color: white;
+  z-index: 99;
+
+  & .autocomplete-option {
+    font-family: "Bebas Neue", cursive;
+    font-size: 1.2rem;
+    padding-left: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+
+    &:hover,
+    &:active {
+      background-color: var(--clr-accent-900);
+      color: white;
+      cursor: pointer;
+    }
+  }
+}

@@ -1,0 +1,36 @@
+.pagination-container {
+  padding: 20px 40px;
+
+  & .pageNum-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+
+    @media (max-width: 550px) {
+      justify-content: center;
+    }
+  }
+
+  & .productsPerPage-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    @media (max-width: 550px) {
+      justify-content: center;
+    }
+  }
+
+  & span {
+    margin-right: 5px;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+
+    @media (max-width: 550px) {
+      font-size: 1rem;
+      max-width: 60px;
+      text-align: center;
+    }
+  }
+}

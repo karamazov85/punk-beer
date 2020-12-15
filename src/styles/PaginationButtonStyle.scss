@@ -1,0 +1,13 @@
+.button-pagination {
+  font-family: "Bebas Neue", cursive;
+  font-size: 1rem;
+  padding: 10px 10px;
+  border: none;
+  cursor: pointer;
+  margin-left: 5px;
+
+  &:hover {
+    color: white;
+    background-color: var(--clr-accent-900);
+  }
+}

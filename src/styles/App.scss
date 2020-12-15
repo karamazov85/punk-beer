@@ -1,0 +1,30 @@
+:root {
+  --ff-serif: "Bebas Neue", cursive;
+  --ff-sans: "Poppins", sans-serif;
+
+  --fw-400: 400;
+
+  --clr-neutral-900: rgba(0, 0, 0, 0.9);
+  --clr-accent-700: #bfbfbfc9;
+  --clr-accent-800: rgb(36, 175, 235, 0.1);
+  --clr-accent-900: #24afeb;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+.container {
+  width: 100%;
+  margin: 0 auto;
+  font-family: var(--ff-serif);
+  color: var(--clr-neutral-900);
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}

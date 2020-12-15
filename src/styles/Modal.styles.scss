@@ -1,0 +1,86 @@
+.modal-wrapper {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+
+  & .modal-background {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: 100;
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+
+  & .modal-box {
+    position: relative;
+    min-height: 40%;
+    width: 60%;
+    background-color: rgba(0, 0, 0, 0.9);
+    z-index: 103;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    overflow: auto;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.4);
+
+    @media (max-width: 815px) {
+      width: 90%;
+      top: 12%;
+    }
+
+    & .info-box-wrapper {
+      padding: 20px 20px;
+      display: grid;
+      justify-content: center;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto auto auto;
+
+      grid-template-areas:
+        "info-box-abv  ."
+        "info-box-ibu  info-box-og"
+        "info-box-yeast  info-box-malt"
+        "info-box-hops .";
+
+      @media (max-width: 815px) {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto auto auto auto;
+
+        grid-template-areas:
+          "info-box-abv"
+          "info-box-ibu"
+          "info-box-og"
+          "info-box-yeast"
+          "info-box-malt"
+          "info-box-hops";
+      }
+
+      & .abv {
+        grid-area: info-box-abv;
+      }
+
+      & .ibu {
+        grid-area: info-box-ibu;
+      }
+
+      & .yeast {
+        grid-area: info-box-yeast;
+      }
+
+      & .og {
+        grid-area: info-box-og;
+      }
+
+      & .hops {
+        grid-area: info-box-hops;
+      }
+
+      & .malt {
+        grid-area: info-box-malt;
+      }
+    }
+  }
+}

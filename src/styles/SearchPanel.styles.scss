@@ -1,0 +1,126 @@
+.panel-flex {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  margin: 0 auto;
+  width: 100%;
+  height: 250px;
+
+  & ul {
+    width: 100%;
+    font-family: var(--ff-serif);
+    font-size: 1.5rem;
+    list-style: none;
+    text-align: center;
+    cursor: pointer;
+
+    & li {
+      @media (max-width: 550px) {
+        margin: 5px auto;
+      }
+    }
+
+    @media (max-width: 550px) {
+      text-align: center;
+      font-size: 1.2rem;
+      padding: 0 0;
+    }
+  }
+
+  & .searchField {
+    width: 75%;
+    height: 50px;
+    margin-top: 25px;
+    align-self: center;
+    display: flex;
+    position: relative;
+
+    @media (max-width: 550px) {
+      width: 300px;
+      height: 85px;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+
+  & .searchFieldInput {
+    width: 100%;
+    border: 1px solid var(--clr-accent-700);
+    border-radius: 0px;
+
+    @media (max-width: 660px) {
+      height: 40px;
+    }
+
+    @media (max-width: 550px) {
+      margin-bottom: 5px;
+    }
+
+    &:focus,
+    &:active {
+      outline: none;
+    }
+  }
+
+  & .displayAutoCompleteActive {
+    border-bottom: none;
+    width: 100%;
+  }
+
+  & .searchFieldSubmit {
+    width: 140px;
+    height: 50px;
+    border: 2px solid var(--clr-neutral-900);
+    font-family: var(--ff-serif);
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    background-color: var(--clr-neutral-900);
+    color: white;
+
+    &:hover {
+      color: var(--clr-neutral-900);
+      background-color: white;
+      border: 1px solid var(--clr-neutral-900);
+      cursor: pointer;
+    }
+
+    @media (max-width: 660px) {
+      width: 110px;
+      height: 40px;
+      font-size: 1.2rem;
+    }
+
+    @media (max-width: 550px) {
+    }
+  }
+
+  & .searchtype-dropdown {
+    height: 50px;
+    width: 300px;
+    display: flex;
+    justify-content: space-evenly;
+    line-height: 50px;
+    font-family: var(--ff-serif);
+    font-size: 1.2rem;
+
+    & select {
+      width: 150px;
+    }
+
+    @media (max-width: 660px) {
+      height: 40px;
+      line-height: 40px;
+    }
+
+    @media (max-width: 550px) {
+      margin-top: 50px;
+    }
+  }
+
+  @media (max-width: 550px) {
+    justify-content: flex-start;
+  }
+}

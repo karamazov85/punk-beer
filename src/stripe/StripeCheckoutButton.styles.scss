@@ -1,0 +1,15 @@
+.stripe-checkout-button {
+  width: 148px;
+  height: 51px;
+  padding-bottom: 0;
+  background-color: #24afeb;
+  border: none;
+  border-radius: 4px;
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 1rem;
+
+  &:hover {
+    background-color: #333;
+    color: white;
+  }
+}
