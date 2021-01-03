@@ -8,7 +8,7 @@ import { BasketContext } from "../providers/BasketProvider";
 import {
   fetchBeerByBeerId,
   getSelectedBeerDetails,
-} from "../providers/search.utils";
+} from "../redux/search/search.utils";
 
 const BeerDetails = () => {
   const params = useParams();

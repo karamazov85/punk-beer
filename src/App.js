@@ -7,29 +7,32 @@ import Footer from "./components/Footer";
 import BeerDetails from "./components/BeerDetails";
 import BasketProvider from "./providers/BasketProvider";
 import SearchProvider from "./providers/SearchProvider";
+
+
 import "./styles/App.scss"
 
 function App() {
+
   return (
-    
-      <BasketProvider>
-        <SearchProvider>
-          <Router>
-            <div className="App">
-              <div className="container">
-                <Header />
-                <Switch>
-                  <Route exact path="/" component={Browse} />
-                  <Route path="/basket" component={Basket} />
-                  <Route path={"/:beerId"} component={BeerDetails} />
-                </Switch>
-                <Footer />
-              </div>
-            </div>
-          </Router>
-        </SearchProvider>
-      </BasketProvider>
-    
+      
+      	<BasketProvider>
+      	 
+      	    <Router>
+      	      <div className="App">
+      	        <div className="container">
+      	          <Header />
+      	          <Switch>
+      	            <Route exact path="/" component={Browse} />
+      	            <Route path="/basket" component={Basket} />
+      	            <Route path={"/:beerId"} component={BeerDetails} />
+      	          </Switch>
+      	          <Footer />
+      	        </div>
+      	      </div>
+      	    </Router>
+      	
+      	</BasketProvider>
+
   );
 }
 

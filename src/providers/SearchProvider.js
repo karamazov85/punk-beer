@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect } from "react";
 import {
   fetchBeers,
-  loadBeers,
+  
   prepDataForAutoComplete,
   applyCurrency,
   sortByDate,
@@ -15,7 +15,7 @@ import {
   filterByBrewDate,
   fetchBeerByBeerId,
   addPrice,
-} from "./search.utils";
+} from "../redux/search/search.utils";
 
 import {
   changeCurrencyForCountry,
@@ -67,13 +67,13 @@ const SearchProvider = ({ children }) => {
   const [currencyCode, setCurrencyCode] = useState("GBP");
   const [currencySign, setCurrencySign] = useState("£");
 
-  const getDataForAutoComplete = async () => {
-    try {
-      const allBeers = await loadBeers();
-      const data = prepDataForAutoComplete(allBeers);
-      setDataForAutoComplete(data);
-    } catch (err) {}
-  };
+  // const getDataForAutoComplete = async () => {
+  //   try {
+  //     const allBeers = await loadBeers();
+  //     const data = prepDataForAutoComplete(allBeers);
+  //     setDataForAutoComplete(data);
+  //   } catch (err) {}
+  // };
 
   const getSearchResults = async () => {
 
@@ -107,7 +107,7 @@ const SearchProvider = ({ children }) => {
   };
 
   const loadDataForAutocomplete = () => {
-    getDataForAutoComplete()
+    // getDataForAutoComplete()
   }
 
   const changeSearchType = (newSearchType) => {

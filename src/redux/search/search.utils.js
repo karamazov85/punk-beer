@@ -1,5 +1,5 @@
-import { convertShortDateToISO } from "../helpers/dateconverter";
-import { currencyConverter } from "../helpers/currencyconverter";
+import { convertShortDateToISO } from "../../helpers/dateconverter";
+import { currencyConverter } from "../../helpers/currencyconverter";
 
 export async function fetchBeers(
   searchText,
@@ -7,6 +7,8 @@ export async function fetchBeers(
   pageNum,
   productsPerPage,
 ) {
+
+  debugger
   let endpoint = "";
 
   if (!searchText || !searchType) {
@@ -28,7 +30,7 @@ export async function fetchBeerByBeerId(beerId) {
   return beer;
 }
 
-export async function loadBeers() {
+export async function fetchAllBeers() {
   const beerRequests = new Array(5)
     .fill(null)
     .map((_, i) =>

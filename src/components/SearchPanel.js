@@ -1,30 +1,24 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { getSearchInputType } from "../helpers/searchPanelInputTypes";
 import SearchForm from "./SearchForm";
-import { SearchContext } from "../providers/SearchProvider";
+// import { SearchContext } from "../providers/SearchProvider";
 import "../styles/SearchPanel.styles.scss";
 
 const SearchPanel = () => {
   const [searchType, setSearchType] = useState("beer_name");
-  const { changeSearchType, loadDataForAutocomplete } = useContext(SearchContext);
-
-  // on mount, set default search type in Context
-  useEffect(() => {
-    changeSearchType(searchType)
-    loadDataForAutocomplete();
-  }, []);
+  
 
   const handleDropdownChange = (e) => {
     e.preventDefault();
     setSearchType(e.target.value.toLowerCase());
-    changeSearchType(e.target.value.toLowerCase());
+    // changeSearchType(e.target.value.toLowerCase());
   };
 
   const searchFormProps = getSearchInputType(searchType);
 
   return (
     <div className="panel-flex">
-      <SearchForm searchType={searchType} {...searchFormProps} />
+      <SearchForm selectedSearchType={searchType} {...searchFormProps} />
       <form className="searchtype-dropdown">
         <label>Search by:</label>
         <select name="search-by" onChange={handleDropdownChange}>

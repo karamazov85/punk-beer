@@ -1,18 +1,14 @@
-import React, { useContext } from "react";
+import React from "react";
 import SortSearchFilter from "./SortSearchFilter";
 import ProductCard from "./ProductCard";
 import Pagination from "./Pagination";
-import { SearchContext } from "../providers/SearchProvider";
 import "../styles/Browse.styles.scss";
+import { useSelector } from "react-redux";
+
 
 const Browse = () => {
-  const { searchResults, searchComplete, setSearchComplete } = useContext(
-    SearchContext
-  );
-
-  const handleClick = () => {
-    setSearchComplete(false);
-  };
+  const searchResult = useSelector(state => state.search.searchResult);
+  const searchComplete = useSelector(state => state.search.searchComplete);
 
   return (
     <div className="browse-container">
@@ -21,19 +17,19 @@ const Browse = () => {
       </div>
       <SortSearchFilter />
       <div className="products-grid">
-        {searchResults.map((beer) => (
+        {Object.values(searchResult).map((beer) => (
           <ProductCard key={beer.id} beer={beer} />
         ))}
       </div>
       {searchComplete ? (
         <div className="back-to-browse-container">
           <div className="back-container">
-            <button className="back-to-browse-button" onClick={handleClick}>
+            <button className="back-to-browse-button">
               BACK TO BROWSE
             </button>
           </div>
         </div>
-      ) : null}
+      ) : null} 
       <Pagination />
     </div>
   );

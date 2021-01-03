@@ -14,10 +14,10 @@ const Footer = () => {
   const { changeCurrencyForBasket } = useContext(BasketContext);
   const { changeCurrencyForSearch } = useContext(SearchContext);
 
-  useEffect(() => {
-    changeCurrencyForSearch(country);
-    changeCurrencyForBasket(country);
-  }, [country]);
+  // useEffect(() => {
+  //   changeCurrencyForSearch(country);
+  //   changeCurrencyForBasket(country);
+  // }, [country]);
 
   return (
     <div className="footer-container">
