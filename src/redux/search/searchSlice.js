@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchBeers, addPrice, fetchAllBeers, prepDataForAutoComplete, sortAtoZ, sortZtoA, sortByDate, sortABVhighToLow, sortABVlowToHigh, filterByName, filterByMinPrice, filterByMaxPrice, filterByBrewDate, applyCurrency, getCurrencySign } from "./search.utils";
 

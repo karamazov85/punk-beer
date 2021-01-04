@@ -16,27 +16,9 @@ const BeerDetails = () => {
   const searchResult = useSelector(state => state.search.searchResult)
   const beer = searchResult.find(beer => beer.id === beerId);
   const selectBeerData = getSelectedBeerDetails(beer)
+  const { name, image_url, abv, ibu, price, tagline, description } = selectBeerData;
   const currencySign = useSelector(state => state.search.currencySign);
   
-  // const { addToBasket } = useContext(BasketContext);
-  // const [beer, setBeer] = useState({
-  //   id: null,
-  //   name: "",
-  //   image_url: "",
-  //   abv: null,
-  //   ibu: null,
-  //   target_og: null,
-  //   hops: "",
-  //   malt: "",
-  //   yeast: "",
-  //   price_GBP: null,
-  //   price: null,
-  //   tagline: "",
-  //   description: "",
-  // });
-
-  const { id, name, image_url, abv, ibu, price, tagline, description } = selectBeerData;
-
   const [quantity, setQuantity] = useState(1);
   const modalRef = useRef();
 

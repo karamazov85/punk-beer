@@ -1,17 +1,14 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { BasketContext } from "../providers/BasketProvider";
+import { useSelector, useDispatch } from "react-redux";
+import { addToBasket, updateBasketTotals } from "../redux/basket/basketSlice";
 import "../styles/ProductCard.scss";
-
 
 const ProductCard = ({ beer }) => {
   const { name, tagline, abv, first_brewed, image_url, price, id } = beer;
-  
   const [quantity, setQuantity] = useState(1);
-  const { addToBasket } = useContext(BasketContext);
-  
   const currencySign = useSelector(state => state.search.currencySign);
+  const dispatch = useDispatch();
 
   const handleQtyChange = (e) => {
     const quantityFromForm = parseInt(e.target.value);
@@ -36,7 +33,8 @@ const ProductCard = ({ beer }) => {
     if (quantity === 0) {
       return;
     }
-    addToBasket(beer, quantity);
+    dispatch(addToBasket({beer, quantity}));
+    dispatch(updateBasketTotals())
     setQuantity(1);
   };
 

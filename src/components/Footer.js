@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
 import { setPricesInNewCurrency, setNewCurrencySign } from "../redux/search/searchSlice";
 import {
@@ -7,20 +7,11 @@ import {
   IoLogoInstagram,
   IoLogoTwitter,
 } from "react-icons/io";
-import { BasketContext } from "../providers/BasketProvider";
-import { SearchContext } from "../providers/SearchProvider";
 import "../styles/Footer.styles.scss";
 
 const Footer = () => {
   
-  // const { changeCurrencyForBasket } = useContext(BasketContext);
-
   const dispatch = useDispatch()
-
-  // useEffect(() => {
-    // changeCurrencyForSearch(country);
-  //   changeCurrencyForBasket(country);
-  // }, [country]);
 
   const handleChange = (e) => {
     dispatch(setPricesInNewCurrency(e.target.value))
