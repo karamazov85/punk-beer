@@ -1,15 +1,12 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { filterSearchResultByName, filterSearchResultByMinPrice, filterSearchResultByMaxPrice, filterSearchResultByBrewDate } from "../redux/search/searchSlice";
 import CustomInput from "../components/CustomInput";
-import { SearchContext } from "../providers/SearchProvider";
 
 const FilterQueryPanel = ({ inputParams }) => {
   const [formData, setFormData] = useState({ id: "", type: "", value: null });
-  const {
-    filterSearchResultsByName,
-    filterSearchResultsByMinPrice,
-    filterSearchResultsByMaxPrice,
-    filterSearchResultsByBrewDate,
-  } = useContext(SearchContext);
+  const dispatch = useDispatch()
+
 
   const handleChange = (e) => {
     setFormData({
@@ -25,15 +22,15 @@ const FilterQueryPanel = ({ inputParams }) => {
 
     switch (formData.id) {
       case "beername":
-        filterSearchResultsByName(formData.value);
+        dispatch(filterSearchResultByName(formData.value));
         break;
       case "minprice":
-        filterSearchResultsByMinPrice(formData.value);
+        dispatch(filterSearchResultByMinPrice(formData.value));
         break;
       case "maxprice":
-        filterSearchResultsByMaxPrice(formData.value);
+        dispatch(filterSearchResultByMaxPrice(formData.value));
       case "brewdate":
-        filterSearchResultsByBrewDate(formData.value);
+        dispatch(filterSearchResultByBrewDate(formData.value));
       default:
         break;
     }

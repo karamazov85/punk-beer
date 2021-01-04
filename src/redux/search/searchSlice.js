@@ -1,6 +1,6 @@
 
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchBeers, addPrice, fetchAllBeers, prepDataForAutoComplete, sortAtoZ, sortZtoA, sortByDate, sortABVhighToLow, sortABVlowToHigh } from "./search.utils";
+import { fetchBeers, addPrice, fetchAllBeers, prepDataForAutoComplete, sortAtoZ, sortZtoA, sortByDate, sortABVhighToLow, sortABVlowToHigh, filterByName, filterByMinPrice, filterByMaxPrice, filterByBrewDate } from "./search.utils";
 
 export const slice = createSlice({
     name: "search", 
@@ -48,11 +48,26 @@ export const slice = createSlice({
             const sorted = sortABVlowToHigh(state.searchResult);
             state.searchResult = sorted; 
         },
+        filterSearchResultByName: (state, action) => {
+            const filtered = filterByName(state.searchResult, action.payload);
+            state.searchResult = filtered; 
+        },
+        filterSearchResultByMinPrice: (state, action) => {
+            const filtered = filterByMinPrice(state.searchResult, action.payload);
+            state.searchResult = filtered;
+        },
+        filterSearchResultByMaxPrice: (state, action) => {
+            const filtered = filterByMaxPrice(state.searchResult, action.payload);
+            state.searchResult = filtered;
+        },
+        filterSearchResultByBrewDate: (state, action) => {
+            const filtered = filterByBrewDate(state.searchResult, action.payload);
+            state.searchResult = filtered;
+        },
+    }
+});     
 
-    },
-})     
-
-export const { setSearchParams, setSearchResult, setDataForAutoComplete, setSearchComplete, sortSearchResultAtoZ, sortSearchResultZtoA, sortSearchResultByDate, sortByAbvHighToLow, sortByAbvLowToHigh} = slice.actions;
+export const { setSearchParams, setSearchResult, setDataForAutoComplete, setSearchComplete, sortSearchResultAtoZ, sortSearchResultZtoA, sortSearchResultByDate, sortByAbvHighToLow, sortByAbvLowToHigh, filterSearchResultByName, filterSearchResultByMinPrice, filterSearchResultByMaxPrice, filterSearchResultByBrewDate } = slice.actions;
 
 // THUNKS
 export const fetchBeersOnInit = () => async dispatch => {

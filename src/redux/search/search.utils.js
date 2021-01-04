@@ -162,7 +162,7 @@ export const sortABVlowToHigh = (searchResult) => {
   const sorted = searchResult.sort(
     (beerA, beerB) => beerA.abv - beerB.abv
   );
-  
+
   return sorted;
 };
 
@@ -175,23 +175,23 @@ export const sortABVhighToLow = (searchResult) => {
   return sorted;
 };
 
-export const filterByName = (name, searchResults) => {
+export const filterByName = (searchResult, name) => {
   const regex = new RegExp(`^${name}`, "ig");
-  return searchResults.filter((beer) => beer.name.match(regex));
+  return searchResult.filter((beer) => beer.name.match(regex));
 };
 
-export const filterByMinPrice = (price, searchResults) => {
-  return searchResults.filter((beer) => beer.price >= price);
+export const filterByMinPrice = (searchResult, price) => {
+  return searchResult.filter((beer) => beer.price >= price);
 };
 
-export const filterByMaxPrice = (price, searchResults) => {
-  return searchResults.filter((beer) => beer.price <= price);
+export const filterByMaxPrice = (searchResult, price) => {
+  return searchResult.filter((beer) => beer.price <= price);
 };
 
-export const filterByBrewDate = (date, searchResults) => {
+export const filterByBrewDate = (searchResult, date) => {
   const selectedDateUTC = new Date(date);
 
-  const beerWithFormattedDates = searchResults.map((beer) => {
+  const beerWithFormattedDates = searchResult.map((beer) => {
     const brewDateISO = convertShortDateToISO(beer.first_brewed);
     const brewDateUTC = new Date(brewDateISO);
     beer.first_brewed_UTC = brewDateUTC;
