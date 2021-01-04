@@ -8,7 +8,6 @@ export async function fetchBeers(
   productsPerPage,
 ) {
 
-  debugger
   let endpoint = "";
 
   if (!searchText || !searchType) {
@@ -121,12 +120,13 @@ export const addPrice = beers => {
   })
 }
 
-export const sortByDate = (searchResults) => {
-  const searchResultsCopy = [...searchResults];
+export const sortByDate = (searchResult) => {
 
-  const beersWithDatesFormatted = searchResultsCopy.map((beer) => {
-    const date = beer.first_brewed.split("/").map(parseFloat);
-    beer.formattedDate = new Date(date[1], date[0], 1);
+  const beersWithDatesFormatted = searchResult.map((beer) => {
+    const date = beer.first_brewed.split("/").map(el => parseFloat(el));
+    console.log(date)
+    beer.formattedDate = new Date(date[1], date[0] - 1, 1); // new Date ( year, month, day ) NOTE: month is 0 indexed so if you want it to be September then you have to give it as 9 - 1. Subtract 1 from the original number of the month.
+    console.log(beer.formattedDate)
     return beer;
   });
   const sorted = beersWithDatesFormatted.sort(
@@ -135,43 +135,43 @@ export const sortByDate = (searchResults) => {
   return sorted;
 };
 
-export const sortAtoZ = (searchResults) => {
-  const searchResultsCopy = [...searchResults];
-
-  const sorted = searchResultsCopy.sort((beerA, beerB) => {
+export const sortAtoZ = (searchResult) => {
+  
+  const sorted = searchResult.sort((beerA, beerB) => {
     return beerA.name.localeCompare(beerB.name, "en", {
       ignorePunctuation: true,
     });
-  });
+  }); 
+
   return sorted;
 };
 
-export const sortZtoA = (searchResults) => {
-  const searchResultsCopy = [...searchResults];
-
-  const sorted = searchResultsCopy.sort((beerA, beerB) => {
+export const sortZtoA = (searchResult) => {
+  
+  const sorted = searchResult.sort((beerA, beerB) => {
     return beerB.name.localeCompare(beerA.name, "en", {
       ignorePunctuation: true,
     });
   });
+
   return sorted;
 };
 
-export const sortABVlowToHigh = (searchResults) => {
-  const searchResultsCopy = [...searchResults];
+export const sortABVlowToHigh = (searchResult) => {
 
-  const sorted = searchResultsCopy.sort(
+  const sorted = searchResult.sort(
     (beerA, beerB) => beerA.abv - beerB.abv
   );
+  
   return sorted;
 };
 
-export const sortABVhighToLow = (searchResults) => {
-  const searchResultsCopy = [...searchResults];
+export const sortABVhighToLow = (searchResult) => {
 
-  const sorted = searchResultsCopy.sort(
+  const sorted = searchResult.sort(
     (beerA, beerB) => beerB.abv - beerA.abv
   );
+
   return sorted;
 };
 

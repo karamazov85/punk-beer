@@ -1,11 +1,11 @@
 
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchBeers, addPrice, fetchAllBeers, prepDataForAutoComplete } from "./search.utils";
+import { fetchBeers, addPrice, fetchAllBeers, prepDataForAutoComplete, sortAtoZ, sortZtoA, sortByDate, sortABVhighToLow, sortABVlowToHigh } from "./search.utils";
 
 export const slice = createSlice({
     name: "search", 
     initialState: {
-        searchResult: {},
+        searchResult: [],
         searchParams: { 
             searchText: "",
             searchType: "beer_name",
@@ -20,25 +20,41 @@ export const slice = createSlice({
             state.searchParams = action.payload
         },
         setSearchResult: (state, action) => {
-            const newSearchResult = {};
-            action.payload.forEach(beer => {newSearchResult[beer.id] = beer});
-            state.searchResult = newSearchResult;
+            state.searchResult = action.payload;
         },
         setDataForAutoComplete: (state, action) => {
             state.dataForAutoComplete = action.payload;
         },
         setSearchComplete: (state, action) => {
             state.searchComplete = action.payload;
-        } 
-        
+        },
+        sortSearchResultAtoZ: state => {
+            const sorted = sortAtoZ(state.searchResult);
+            state.searchResult = sorted;
+        },
+        sortSearchResultZtoA: state => {
+            const sorted = sortZtoA(state.searchResult);
+            state.searchResult = sorted;
+        },
+        sortSearchResultByDate: state => {
+            const sorted = sortByDate(state.searchResult);
+            state.searchResult = sorted; 
+        },
+        sortByAbvHighToLow: state => {
+            const sorted = sortABVhighToLow(state.searchResult);
+            state.searchResult = sorted; 
+        },
+        sortByAbvLowToHigh: state => {
+            const sorted = sortABVlowToHigh(state.searchResult);
+            state.searchResult = sorted; 
+        },
+
     },
 })     
 
-export const { setSearchParams, setSearchResult, setDataForAutoComplete, setSearchComplete } = slice.actions;
-
+export const { setSearchParams, setSearchResult, setDataForAutoComplete, setSearchComplete, sortSearchResultAtoZ, sortSearchResultZtoA, sortSearchResultByDate, sortByAbvHighToLow, sortByAbvLowToHigh} = slice.actions;
 
 // THUNKS
-
 export const fetchBeersOnInit = () => async dispatch => {
     const searchParamsForAppInitAPICall = { 
             searchText: "",
@@ -50,7 +66,7 @@ export const fetchBeersOnInit = () => async dispatch => {
     try {
         const beersFromAPI = await fetchBeers(searchText, searchType, pageNum, productsPerPage);
         const beersWithPrices = addPrice(beersFromAPI);
-        dispatch(setSearchResult(beersWithPrices)); 
+        dispatch(setSearchResult(beersWithPrices));
     } catch (err) {
         console.log(err)
     }

@@ -1,24 +1,20 @@
-import React, { useContext } from "react";
+import React, {useContext} from "react";
+import { useDispatch } from "react-redux";
 import { SearchContext } from "../providers/SearchProvider";
+import { sortSearchResultAtoZ, sortSearchResultZtoA, sortSearchResultByDate, sortByAbvHighToLow, sortByAbvLowToHigh } from "../redux/search/searchSlice";
 
 const SortPanel = () => {
-  const {
-    sortSearchResultsByDate,
-    sortSearchResultsAtoZ,
-    sortSearchResultsZtoA,
-    sortSearchResultsByABVlowToHigh,
-    sortSearchResultsByABVHighToLow,
-  } = useContext(SearchContext);
+  const dispatch = useDispatch()
 
   return (
     <ul className="PanelList">
-      <li onClick={sortSearchResultsByDate}>
+      <li onClick={() => dispatch(sortSearchResultByDate())}>
         First Brewed Date (Newest first)
       </li>
-      <li onClick={sortSearchResultsAtoZ}>Name A-Z</li>
-      <li onClick={sortSearchResultsZtoA}>Name Z-A</li>
-      <li onClick={sortSearchResultsByABVlowToHigh}>ABV Low To High</li>
-      <li onClick={sortSearchResultsByABVHighToLow}>ABV High To Low</li>
+      <li onClick={() => dispatch(sortSearchResultAtoZ())}>Name A-Z</li>
+      <li onClick={() => dispatch(sortSearchResultZtoA())}>Name Z-A</li>
+      <li onClick={() => dispatch(sortByAbvLowToHigh())}>ABV Low To High</li>
+      <li onClick={() => dispatch(sortByAbvHighToLow())}>ABV High To Low</li>
     </ul>
   );
 };

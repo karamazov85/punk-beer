@@ -17,7 +17,7 @@ const Browse = () => {
       </div>
       <SortSearchFilter />
       <div className="products-grid">
-        {Object.values(searchResult).map((beer) => (
+        {searchResult.map((beer) => (
           <ProductCard key={beer.id} beer={beer} />
         ))}
       </div>
