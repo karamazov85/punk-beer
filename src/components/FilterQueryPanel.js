@@ -7,7 +7,6 @@ const FilterQueryPanel = ({ inputParams }) => {
   const [formData, setFormData] = useState({ id: "", type: "", value: null });
   const dispatch = useDispatch()
 
-
   const handleChange = (e) => {
     setFormData({
       id: e.target.id,

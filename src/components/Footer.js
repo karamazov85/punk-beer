@@ -1,4 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { setPricesInNewCurrency, setNewCurrencySign } from "../redux/search/searchSlice";
 import {
   IoLogoFacebook,
   IoLogoYoutube,
@@ -10,14 +12,20 @@ import { SearchContext } from "../providers/SearchProvider";
 import "../styles/Footer.styles.scss";
 
 const Footer = () => {
-  const [country, setCountry] = useState("UK");
-  const { changeCurrencyForBasket } = useContext(BasketContext);
-  const { changeCurrencyForSearch } = useContext(SearchContext);
+  
+  // const { changeCurrencyForBasket } = useContext(BasketContext);
+
+  const dispatch = useDispatch()
 
   // useEffect(() => {
-  //   changeCurrencyForSearch(country);
+    // changeCurrencyForSearch(country);
   //   changeCurrencyForBasket(country);
   // }, [country]);
+
+  const handleChange = (e) => {
+    dispatch(setPricesInNewCurrency(e.target.value))
+    dispatch(setNewCurrencySign(e.target.value))
+  }
 
   return (
     <div className="footer-container">
@@ -39,10 +47,10 @@ const Footer = () => {
       <div className="country-select">
         <p>Country:</p>
         <form>
-          <select onChange={(e) => setCountry(e.target.value)}>
-            <option>UK</option>
-            <option>USA</option>
-            <option>Germany</option>
+          <select onChange={handleChange}>
+            <option>GBP</option>
+            <option>USD</option>
+            <option>EUR</option>
           </select>
         </form>
       </div>

@@ -1,8 +1,8 @@
 import React, { useState, useContext, useRef, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 import Modal from "../components/Modal";
 import "../styles/BeerDetails.styles.scss";
-import { SearchContext } from "../providers/SearchProvider";
 import { BasketContext } from "../providers/BasketProvider";
 
 import {
@@ -13,25 +13,29 @@ import {
 const BeerDetails = () => {
   const params = useParams();
   const beerId = parseInt(params.beerId);
-  const { searchResults } = useContext(SearchContext);
-  const { addToBasket } = useContext(BasketContext);
-  const [beer, setBeer] = useState({
-    id: null,
-    name: "",
-    image_url: "",
-    abv: null,
-    ibu: null,
-    target_og: null,
-    hops: "",
-    malt: "",
-    yeast: "",
-    price_GBP: null,
-    price: null,
-    tagline: "",
-    description: "",
-  });
+  const searchResult = useSelector(state => state.search.searchResult)
+  const beer = searchResult.find(beer => beer.id === beerId);
+  const selectBeerData = getSelectedBeerDetails(beer)
+  const currencySign = useSelector(state => state.search.currencySign);
+  
+  // const { addToBasket } = useContext(BasketContext);
+  // const [beer, setBeer] = useState({
+  //   id: null,
+  //   name: "",
+  //   image_url: "",
+  //   abv: null,
+  //   ibu: null,
+  //   target_og: null,
+  //   hops: "",
+  //   malt: "",
+  //   yeast: "",
+  //   price_GBP: null,
+  //   price: null,
+  //   tagline: "",
+  //   description: "",
+  // });
 
-  const { id, name, image_url, abv, ibu, price, tagline, description } = beer;
+  const { id, name, image_url, abv, ibu, price, tagline, description } = selectBeerData;
 
   const [quantity, setQuantity] = useState(1);
   const modalRef = useRef();
@@ -60,29 +64,29 @@ const BeerDetails = () => {
       return;
     }
     
-    addToBasket(beer, quantity);
+    // addToBasket(beer, quantity);
     setQuantity(1);
   };
 
-  async function checkAndFetchBeer() {
-    let currentBeer = {};
+  // async function checkAndFetchBeer() {
+  //   console.log("MOUNTED")
+  //   let currentBeer = {};
     
-    // if user arrives here from Browse page
-    if (searchResults) {
-      currentBeer = searchResults.find(beer => beer.id === beerId);
-    } else {
-      // BUG: with 'else' it's not fired at all, even when it should be.
-      currentBeer = await fetchBeerByBeerId(beerId)
-    }
+  //   // if user arrives here from Browse page
+  //   if (searchResult) {
+  //     currentBeer = searchResult.find(beer => beer.id === beerId);
+  //   } else {
+  //     // BUG: with 'else' it's not fired at all, even when it should be.
+  //     currentBeer = await fetchBeerByBeerId(beerId)
+  //   }
     
-    // if BeerDetail is the very first page user sees of the whole app
-    const selectedBeerDetails = getSelectedBeerDetails(currentBeer);
-    setBeer(selectedBeerDetails);
-  }
+  //   const selectedBeerDetails = getSelectedBeerDetails(currentBeer);
+  //   setBeer(selectedBeerDetails);
+  // }
 
-  useEffect(() => {
-    checkAndFetchBeer();
-  }, []);
+  // useEffect(() => {
+  //   checkAndFetchBeer();
+  // }, []);
 
 
   return (
@@ -107,7 +111,7 @@ const BeerDetails = () => {
             </div>
             <div className="price">
               <span className="price-headline">Price</span>
-              <span className="price-value">£{price}</span>
+            <span className="price-value">{currencySign}{price}</span>
             </div>
             <div className="ibu">
               <span className="ibu-headline">IBU vol.</span>
@@ -120,7 +124,7 @@ const BeerDetails = () => {
             </p>
           </div>
         </div>
-        {beer && <Modal ref={modalRef} beer={beer} />}
+        {beer && <Modal ref={modalRef} selectBeerData={selectBeerData} />}
       </div>
       <form onSubmit={handleSubmit} className="shop-widget-form">
         <div className="shop-quantity-controller">

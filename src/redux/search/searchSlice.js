@@ -1,6 +1,6 @@
-
+import { useSelector } from "react-redux";
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchBeers, addPrice, fetchAllBeers, prepDataForAutoComplete, sortAtoZ, sortZtoA, sortByDate, sortABVhighToLow, sortABVlowToHigh, filterByName, filterByMinPrice, filterByMaxPrice, filterByBrewDate } from "./search.utils";
+import { fetchBeers, addPrice, fetchAllBeers, prepDataForAutoComplete, sortAtoZ, sortZtoA, sortByDate, sortABVhighToLow, sortABVlowToHigh, filterByName, filterByMinPrice, filterByMaxPrice, filterByBrewDate, applyCurrency, getCurrencySign } from "./search.utils";
 
 export const slice = createSlice({
     name: "search", 
@@ -14,6 +14,7 @@ export const slice = createSlice({
         },
         dataForAutoComplete: {},
         searchComplete: false,
+        currencySign: "£",
     },
     reducers: {
         setSearchParams: (state, action) => {
@@ -64,10 +65,18 @@ export const slice = createSlice({
             const filtered = filterByBrewDate(state.searchResult, action.payload);
             state.searchResult = filtered;
         },
+        setPricesInNewCurrency: (state, action) => {
+            const beersInNewCurrency = applyCurrency(state.searchResult, action.payload);
+            state.searchResult = beersInNewCurrency;
+        },
+        setNewCurrencySign: (state, action) => {
+            const newCurrencySign = getCurrencySign(action.payload); 
+            state.currencySign = newCurrencySign;
+        }
     }
 });     
 
-export const { setSearchParams, setSearchResult, setDataForAutoComplete, setSearchComplete, sortSearchResultAtoZ, sortSearchResultZtoA, sortSearchResultByDate, sortByAbvHighToLow, sortByAbvLowToHigh, filterSearchResultByName, filterSearchResultByMinPrice, filterSearchResultByMaxPrice, filterSearchResultByBrewDate } = slice.actions;
+export const { setSearchParams, setSearchResult, setDataForAutoComplete, setSearchComplete, sortSearchResultAtoZ, sortSearchResultZtoA, sortSearchResultByDate, sortByAbvHighToLow, sortByAbvLowToHigh, filterSearchResultByName, filterSearchResultByMinPrice, filterSearchResultByMaxPrice, filterSearchResultByBrewDate, setPricesInNewCurrency, setNewCurrencySign } = slice.actions;
 
 // THUNKS
 export const fetchBeersOnInit = () => async dispatch => {

@@ -1,15 +1,17 @@
 import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { BasketContext } from "../providers/BasketProvider";
 import "../styles/ProductCard.scss";
-import { SearchContext } from "../providers/SearchProvider";
+
 
 const ProductCard = ({ beer }) => {
   const { name, tagline, abv, first_brewed, image_url, price, id } = beer;
-  // state, context
+  
   const [quantity, setQuantity] = useState(1);
   const { addToBasket } = useContext(BasketContext);
-  const { currencySign } = useContext(SearchContext);
+  
+  const currencySign = useSelector(state => state.search.currencySign);
 
   const handleQtyChange = (e) => {
     const quantityFromForm = parseInt(e.target.value);

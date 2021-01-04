@@ -15,7 +15,7 @@ const Autocomplete = forwardRef(
   ) => {
     const populateAutoComplete = () => {
       const matchResults = options.filter((option) =>
-        option.match(matchRegex(searchText))
+        option && option.match(matchRegex(searchText))
       );
 
       if (matchResults.length < 1) {
@@ -36,13 +36,16 @@ const Autocomplete = forwardRef(
     };
 
     const handleClickOutside = (event) => {
-      const { current: autoComplete } = ref;
-      if (autoComplete && !autoComplete.contains(event.target)) {
+      console.log(ref)
+      const { current: autoCompleteRef } = ref;
+      console.log("fire handleClickOutside", event.target, autoCompleteRef)
+      if (autoCompleteRef && !autoCompleteRef.contains(event.target)) {
         setDisplayAutoComplete(false);
       }
     };
 
     useEffect(() => {
+      console.log("add mousedown")
       window.addEventListener("mousedown", handleClickOutside);
       return () => {
         window.removeEventListener("mousedown", handleClickOutside);

@@ -213,6 +213,23 @@ export const applyCurrency = (beersWithPrices, currencyCode) => {
   return beersWithCurrentCurrency;
 };
 
+export const getCurrencySign = (currencyCode) => {
+  switch (currencyCode) {
+    case "GBP":
+      return "£";
+      break;
+    case "USD":
+      return "$";
+      break;
+    case "EUR":
+      return "€";
+      break;
+    default:
+      return "£";
+      break;
+  }
+}
+
 export const getSelectedBeerDetails = (beer) => {
   
   const {

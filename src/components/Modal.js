@@ -8,13 +8,13 @@ import React, {
 import InfoBox from "./InfoBox";
 import "../styles/Modal.styles.scss";
 
-const Modal = forwardRef(({ beer }, ref) => {
+const Modal = forwardRef(({ selectBeerData }, ref) => {
   const backgroundRef = useRef();
   const [display, setDisplay] = useState(false);
 
   const [expandedInfoBoxName, setExpandedInfoBoxName] = useState(null);
 
-  const { abv, ibu, target_og, hops, yeast, malt } = beer;
+  const { abv, ibu, target_og, hops, yeast, malt } = selectBeerData;
 
   useImperativeHandle(ref, () => ({
     open,
