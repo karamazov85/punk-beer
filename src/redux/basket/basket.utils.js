@@ -85,22 +85,54 @@ export const calculateBasketItemsCount = (basketItems) => {
   );
 };
 
-export const changeCurrencyForCountry = (country) => {
-  switch (country) {
-    case "UK":
-      return "GBP";
+export const applyCurrencyToBasket = (basketItems, currencyCode) => {
+  
+  const beersWithCurrentCurrency_arr = Object.values(basketItems).map(beer => {
+    beer.price = currencyConverter(beer.price_GBP, currencyCode)
+    return beer;
+  });
+  
+  const beersWithCurrentCurrency_obj = beersWithCurrentCurrency_arr.reduce((obj, curr) => {
+    obj[curr.id] = curr;
+    return obj
+  },{})
+
+  return beersWithCurrentCurrency_obj;
+};
+
+export const getCurrencySign = (currencyCode) => {
+  switch (currencyCode) {
+    case "GBP":
+      return "£";
       break;
-    case "USA":
-      return "USD";
+    case "USD":
+      return "$";
       break;
-    case "Germany":
-      return "EUR";
+    case "EUR":
+      return "€";
       break;
     default:
-      return "GBP";
+      return "£";
       break;
   }
-};
+}
+
+// export const changeCurrencyForCountry = (country) => {
+//   switch (country) {
+//     case "UK":
+//       return "GBP";
+//       break;
+//     case "USA":
+//       return "USD";
+//       break;
+//     case "Germany":
+//       return "EUR";
+//       break;
+//     default:
+//       return "GBP";
+//       break;
+//   }
+// };
 
 export const changeCurrencySignForCountry = (country) => {
   switch (country) {

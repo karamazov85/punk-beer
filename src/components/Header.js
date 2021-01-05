@@ -1,14 +1,21 @@
-import React, { useContext } from "react";
+import React, { useState } from "react";
 import logo from "../pictures/brewdog-logo.png";
 import { IoIosCart } from "react-icons/io";
-import { BasketContext } from "../providers/BasketProvider";
 import BasketPreview from "./BasketPreview";
 import { Link } from "react-router-dom";
 import "../styles/Header.styles.scss";
 
 const Header = () => {
-  const { previewHidden, toggleHidden } = useContext(BasketContext);
+  const [showPreview, setShowPreview] = useState(false)
 
+  const handlePreviewOpen = () => {
+    setShowPreview(true)
+  }
+
+  const handlePreviewClose = () => {
+    setShowPreview(false)
+  }
+  
   return (
     <>
       <div className="header-grid">
@@ -25,12 +32,12 @@ const Header = () => {
             <p>Basket</p>
           </Link>
           <p>
-            <IoIosCart className="header-icon-cart" onClick={toggleHidden} />
+            <IoIosCart className="header-icon-cart" onClick={handlePreviewOpen} />
           </p>
         </div>
       </div>
       <div className="basket-preview-wrapper">
-        {previewHidden ? null : <BasketPreview />}
+        {!showPreview ? null : <BasketPreview closeBasketPreview={handlePreviewClose} />}
       </div>
     </>
   );

@@ -1,22 +1,25 @@
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { setBasketItemsCount } from "../redux/basket/basketSlice";
 import BasketItemPreview from "./BasketPreviewItem";
-import { BasketContext } from "../providers/BasketProvider";
 import "../styles/BasketPreview.styles.scss";
 import { PayPalButton } from "react-paypal-button-v2";
 import StripeCheckoutButton from "../stripe/StripeCheckoutButton";
 
-const BasketPreview = () => {
-  const {
-    basketItems,
-    basketTotal,
-    basketItemsCount,
-    toggleHidden,
-    currencyCode,
-    currencySign,
-  } = useContext(BasketContext);
-
+const BasketPreview = ({ closeBasketPreview }) => {
+  
+  const basketItems = useSelector(state => state.basket.basketItems);
+  const basketTotal = useSelector(state => state.basket.basketTotal);
+  const currencyCode = useSelector(state => state.basket.currencyCode);
+  const currencySign = useSelector(state => state.basket.currencySign);
+  const basketItemsCount = useSelector(state => state.basket.basketItemsCount);
+  const dispatch = useDispatch()
   const history = useHistory();
+
+  useEffect(() => {
+    dispatch(setBasketItemsCount());
+  },[])
 
   return (
     <div className="basket-preview-panel">
@@ -27,7 +30,7 @@ const BasketPreview = () => {
             {basketItemsCount}
           </span>
         </div>
-        <span className="close-basket-preview" onClick={toggleHidden}>
+        <span className="close-basket-preview" onClick={closeBasketPreview}>
           {" "}
           &#9547;{" "}
         </span>
@@ -104,7 +107,7 @@ const BasketPreview = () => {
           className="view-basket"
           onClick={() => {
             history.push("/basket");
-            toggleHidden();
+            closeBasketPreview()
           }}
         >
           See whole basket

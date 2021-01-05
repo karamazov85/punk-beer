@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addItemToBasket, removeItemFromBasket, clearItemFromBasket, calculateBasketTotal  } from "./basket.utils.js"
+import { addItemToBasket, removeItemFromBasket, clearItemFromBasket, calculateBasketTotal, applyCurrencyToBasket, getCurrencySign, calculateBasketItemsCount  } from "./basket.utils.js"
 
 
 export const slice = createSlice({
@@ -9,7 +9,7 @@ export const slice = createSlice({
         basketTotal: { subTotal: 0, tax: 0, total: 0 },
         currencyCode: "GBP",
         currencySign: "£",
-        test: null
+        basketItemsCount: 0,
     },
     reducers: {
         addToBasket: (state, action) => {
@@ -28,10 +28,26 @@ export const slice = createSlice({
             const newBasketTotal = calculateBasketTotal(state.basketItems); 
             state.basketTotal = newBasketTotal;
         },
+        setPricesInNewCurrencyInBasket: (state, action) => {
+            const beersInNewCurrency = applyCurrencyToBasket(state.basketItems, action.payload);
+            state.basketItems = beersInNewCurrency;
+        },
+        setNewCurrencySignInBasket: (state, action) => {
+            const newCurrencySign = getCurrencySign(action.payload); 
+            state.currencySign = newCurrencySign;
+        },
+        setNewCurrencyCodeInBasket: (state, action) => {
+            const newCurrencyCode = action.payload;
+            state.currencyCode = newCurrencyCode;
+        },
+        setBasketItemsCount: state => {
+            const newBasketItemsCount = calculateBasketItemsCount(state.basketItems);
+            state.basketItemsCount = newBasketItemsCount;
+        }
     }
 })
 
-export const { addToBasket, removeFromBasket, setBasketTotal, clearFromBasket } = slice.actions;
+export const { addToBasket, removeFromBasket, setBasketTotal, clearFromBasket, setPricesInNewCurrencyInBasket, setNewCurrencySignInBasket, setNewCurrencyCodeInBasket, setBasketItemsCount } = slice.actions;
 
 // export const updateBasketTotals = () => (dispatch, getState) => { // order or parameters is CRUCIAL. dipsatch first, getState() second!!!
 //     const basketItems = getState().basket.basketItems;

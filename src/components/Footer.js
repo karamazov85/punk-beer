@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { setPricesInNewCurrency, setNewCurrencySign } from "../redux/search/searchSlice";
+import { setPricesInNewCurrencyInSearch, setNewCurrencySignInSearch, setNewCurrencyCodeInSearch } from "../redux/search/searchSlice";
+import { setPricesInNewCurrencyInBasket, setNewCurrencySignInBasket, setBasketTotal, setNewCurrencyCodeInBasket } from "../redux/basket/basketSlice";
 import {
   IoLogoFacebook,
   IoLogoYoutube,
@@ -14,8 +15,13 @@ const Footer = () => {
   const dispatch = useDispatch()
 
   const handleChange = (e) => {
-    dispatch(setPricesInNewCurrency(e.target.value))
-    dispatch(setNewCurrencySign(e.target.value))
+    dispatch(setPricesInNewCurrencyInSearch(e.target.value))
+    dispatch(setNewCurrencySignInSearch(e.target.value))
+    dispatch(setNewCurrencyCodeInSearch(e.target.value))
+    dispatch(setPricesInNewCurrencyInBasket(e.target.value))
+    dispatch(setNewCurrencySignInBasket(e.target.value))
+    dispatch(setNewCurrencyCodeInBasket(e.target.value))
+    dispatch(setBasketTotal())
   }
 
   return (

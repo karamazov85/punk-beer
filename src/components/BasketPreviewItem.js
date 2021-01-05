@@ -1,13 +1,32 @@
-import React, { useContext } from "react";
-import { BasketContext } from "../providers/BasketProvider";
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { addToBasket, removeFromBasket, clearFromBasket, setBasketItemsCount, setBasketTotal } from "../redux/basket/basketSlice";
 import "../styles/BasketPreviewItem.styles.scss";
 
 const BasketItemPreview = ({ beer }) => {
-  const { addToBasket, removeFromBasket, clearFromBasket, currencySign } = useContext(
-    BasketContext
-  );
-
+  
+  const dispatch = useDispatch();
+  const currencySign = useSelector(state => state.basket.currencySign);
   const { name, price, quantity, image_url } = beer;
+
+  const handleAddToBasket = () => {
+    dispatch(addToBasket({beer, quantity: 1}))
+    dispatch(setBasketItemsCount())
+    dispatch(setBasketTotal());
+  }
+
+  const handleRemoveFromBasket = () => {
+    dispatch(removeFromBasket(beer));
+    dispatch(setBasketItemsCount());
+    dispatch(setBasketTotal());
+  }
+
+  const handleClearFromBasket = () => {
+    dispatch(clearFromBasket(beer));
+    dispatch(setBasketItemsCount());
+    dispatch(setBasketTotal());
+  }
+  
   return (
     <div className="basket-preview-item">
       <img className="basket-preview-img" src={image_url} />
@@ -16,16 +35,16 @@ const BasketItemPreview = ({ beer }) => {
         <span className="basket-preview-price">{currencySign}{price}</span>
         <span
           className="basket-preview-remove"
-          onClick={() => clearFromBasket(beer)}
+          onClick={handleClearFromBasket}
         >
-          Remove from basket
+          Clear from basket
         </span>
         <div className="basket-preview-item-quantity-container">
           <span>Quantity:</span>
           <div className="quantity-controller">
             <span
               className="quantity-minus"
-              onClick={() => removeFromBasket(beer)}
+              onClick={handleRemoveFromBasket}
             >
               {" "}
               &#8722;{" "}
@@ -33,7 +52,7 @@ const BasketItemPreview = ({ beer }) => {
             <span className="quantity-number"> {quantity} </span>
             <span
               className="quantity-plus"
-              onClick={() => addToBasket(beer, 1)}
+              onClick={handleAddToBasket}
             >
               {" "}
               +{" "}

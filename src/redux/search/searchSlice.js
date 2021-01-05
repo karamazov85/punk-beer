@@ -14,6 +14,7 @@ export const slice = createSlice({
         },
         dataForAutoComplete: {},
         searchComplete: false,
+        currencyCode: "GBP",
         currencySign: "£",
     },
     reducers: {
@@ -65,18 +66,22 @@ export const slice = createSlice({
             const filtered = filterByBrewDate(state.searchResult, action.payload);
             state.searchResult = filtered;
         },
-        setPricesInNewCurrency: (state, action) => {
+        setPricesInNewCurrencyInSearch: (state, action) => {
             const beersInNewCurrency = applyCurrency(state.searchResult, action.payload);
             state.searchResult = beersInNewCurrency;
         },
-        setNewCurrencySign: (state, action) => {
+        setNewCurrencySignInSearch: (state, action) => {
             const newCurrencySign = getCurrencySign(action.payload); 
             state.currencySign = newCurrencySign;
+        },
+        setNewCurrencyCodeInSearch: (state, action) => {
+            const newCurrencyCode = action.payload;
+            state.currencyCode = newCurrencyCode;
         }
     }
 });     
 
-export const { setSearchParams, setSearchResult, setDataForAutoComplete, setSearchComplete, sortSearchResultAtoZ, sortSearchResultZtoA, sortSearchResultByDate, sortByAbvHighToLow, sortByAbvLowToHigh, filterSearchResultByName, filterSearchResultByMinPrice, filterSearchResultByMaxPrice, filterSearchResultByBrewDate, setPricesInNewCurrency, setNewCurrencySign } = slice.actions;
+export const { setSearchParams, setSearchResult, setDataForAutoComplete, setSearchComplete, sortSearchResultAtoZ, sortSearchResultZtoA, sortSearchResultByDate, sortByAbvHighToLow, sortByAbvLowToHigh, filterSearchResultByName, filterSearchResultByMinPrice, filterSearchResultByMaxPrice, filterSearchResultByBrewDate, setPricesInNewCurrencyInSearch, setNewCurrencySignInSearch, setNewCurrencyCodeInSearch} = slice.actions;
 
 // THUNKS
 export const fetchBeersOnInit = () => async dispatch => {
@@ -96,13 +101,16 @@ export const fetchBeersOnInit = () => async dispatch => {
     }
 }
 
-export const fetchBeersAsync = searchParams => async dispatch => {
+export const fetchBeersAsync = searchParams => async (dispatch, getState) => {
     dispatch(setSearchParams(searchParams))
     const { searchText, searchType, pageNum, productsPerPage } = searchParams;
     try {
         const beersFromAPI = await fetchBeers(searchText, searchType, pageNum, productsPerPage);
         const beersWithPrices = addPrice(beersFromAPI);
-        dispatch(setSearchResult(beersWithPrices));
+        // check if currencyCode has changed, apply local currency
+        const currencyCode = getState().search.currencyCode; 
+        const beersInCurrentCurrency = applyCurrency(beersWithPrices, currencyCode);
+        dispatch(setSearchResult(beersInCurrentCurrency));
     } catch (err) {
         console.log(err)
     }
