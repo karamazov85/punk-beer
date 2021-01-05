@@ -1,13 +1,10 @@
-import React, { useState, useContext, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { addToBasket, setBasketTotal} from "../redux/basket/basketSlice";
 import Modal from "../components/Modal";
 import "../styles/BeerDetails.styles.scss";
-import { BasketContext } from "../providers/BasketProvider";
-
 import {
-  fetchBeerByBeerId,
   getSelectedBeerDetails,
 } from "../redux/search/search.utils";
 

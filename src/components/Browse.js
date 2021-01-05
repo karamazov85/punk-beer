@@ -1,10 +1,9 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import SortSearchFilter from "./SortSearchFilter";
 import ProductCard from "./ProductCard";
 import Pagination from "./Pagination";
 import "../styles/Browse.styles.scss";
-import { useSelector } from "react-redux";
-
 
 const Browse = () => {
   const searchResult = useSelector(state => state.search.searchResult);

@@ -1,17 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { getSearchInputType } from "../helpers/searchPanelInputTypes";
 import SearchForm from "./SearchForm";
-// import { SearchContext } from "../providers/SearchProvider";
 import "../styles/SearchPanel.styles.scss";
 
 const SearchPanel = () => {
   const [searchType, setSearchType] = useState("beer_name");
   
-
   const handleDropdownChange = (e) => {
     e.preventDefault();
     setSearchType(e.target.value.toLowerCase());
-    // changeSearchType(e.target.value.toLowerCase());
   };
 
   const searchFormProps = getSearchInputType(searchType);

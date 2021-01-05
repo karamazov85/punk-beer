@@ -1,6 +1,5 @@
-import React, {useContext} from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
-import { SearchContext } from "../providers/SearchProvider";
 import { sortSearchResultAtoZ, sortSearchResultZtoA, sortSearchResultByDate, sortByAbvHighToLow, sortByAbvLowToHigh } from "../redux/search/searchSlice";
 
 const SortPanel = () => {

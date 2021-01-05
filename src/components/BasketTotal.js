@@ -1,6 +1,5 @@
-import React, { useContext } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
-import { BasketContext } from "../providers/BasketProvider";
 import TotalItem from "./TotalItem";
 import StripeCheckoutButton from "../stripe/StripeCheckoutButton";
 import PayPalButtonBtn from "../paypal/PayPalButtonBtn";

@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchBeersAsync } from "../redux/search/searchSlice";
-// import { SearchContext } from "../providers/SearchProvider";
 import PaginationButton from "./PaginationButton";
 import "../styles/PaginationStyle.scss";
 
