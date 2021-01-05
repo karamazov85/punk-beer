@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { useSelector } from "react-redux";
 import { BasketContext } from "../providers/BasketProvider";
 import TotalItem from "./TotalItem";
 import StripeCheckoutButton from "../stripe/StripeCheckoutButton";
@@ -6,11 +7,9 @@ import PayPalButtonBtn from "../paypal/PayPalButtonBtn";
 import "../styles/BasketTotal.styles.scss";
 
 const BasketTotal = () => {
-  const {
-    basketTotal,
-    currencyCode,
-    currencySign,
-  } = useContext(BasketContext);
+
+  const basketTotal = useSelector(state => state.basket.basketTotal);
+  const currencySign = useSelector(state => state.basket.currencySign);
 
   return (
     <div className="TotalList">
@@ -49,7 +48,6 @@ const BasketTotal = () => {
         <div className="basket-payment-buttons">
           <PayPalButtonBtn
             amount={basketTotal.total}
-            currency_code={currencyCode}
           />
           <StripeCheckoutButton
             price={basketTotal.total.toFixed(2)}

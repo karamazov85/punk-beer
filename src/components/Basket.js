@@ -1,11 +1,11 @@
-import React, { useContext } from "react";
+import React from "react";
+import { useSelector } from "react-redux";
 import BasketItem from "./BasketItem";
 import BasketTotal from "./BasketTotal";
-import { BasketContext } from "../providers/BasketProvider";
 import "../styles/Basket.styles.scss";
 
 const Basket = () => {
-  const { basketItems } = useContext(BasketContext);
+  const basketItems = useSelector(state => state.basket.basketItems);
 
   return (
     <div className="basket-container-grid">
@@ -21,8 +21,8 @@ const Basket = () => {
             <p className="basket-header-total">Total</p>
           </div>
           <div className="basket-items">
-            {Object.values(basketItems).map((item) => (
-              <BasketItem key={item.id} item={item} />
+            {Object.values(basketItems).map((beer) => (
+              <BasketItem key={beer.id} beer={beer} />
             ))}
           </div>
         </div>

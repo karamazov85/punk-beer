@@ -1,6 +1,7 @@
 import React, { useState, useContext, useRef, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { addToBasket, setBasketTotal} from "../redux/basket/basketSlice";
 import Modal from "../components/Modal";
 import "../styles/BeerDetails.styles.scss";
 import { BasketContext } from "../providers/BasketProvider";
@@ -18,7 +19,6 @@ const BeerDetails = () => {
   const selectBeerData = getSelectedBeerDetails(beer)
   const { name, image_url, abv, ibu, price, tagline, description } = selectBeerData;
   const currencySign = useSelector(state => state.search.currencySign);
-  
   const [quantity, setQuantity] = useState(1);
   const modalRef = useRef();
 
@@ -40,13 +40,16 @@ const BeerDetails = () => {
     setQuantity((quantity) => quantity + 1);
   };
 
+  const dispatch = useDispatch()
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (quantity === 0) {
       return;
     }
     
-    // addToBasket(beer, quantity);
+    dispatch(addToBasket({beer, quantity}));
+    dispatch(setBasketTotal())
     setQuantity(1);
   };
 

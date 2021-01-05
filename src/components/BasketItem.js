@@ -1,16 +1,29 @@
-import React, { useContext } from "react";
-import { BasketContext } from "../providers/BasketProvider";
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { addToBasket, removeFromBasket, setBasketTotal, clearFromBasket } from "../redux/basket/basketSlice";
 import "../styles/BasketItem.styles.scss";
 
-const BasketItem = ({ item }) => {
-  const { name, image_url, quantity, price } = item;
+const BasketItem = ({ beer }) => {
+  const { name, image_url, quantity, price } = beer;
+  
+  const currencySign = useSelector(state => state.basket.currencySign);
+  
+  const dispatch = useDispatch();
+  
+  const leftArrowClicked = () => {
+    dispatch(removeFromBasket(beer));
+    dispatch(setBasketTotal());
+  }
 
-  const {
-    addToBasket,
-    removeFromBasket,
-    clearFromBasket,
-    currencySign,
-  } = useContext(BasketContext);
+  const rightArrowClicked = () => {
+    dispatch(addToBasket({beer, quantity: 1}));
+    dispatch(setBasketTotal());
+  }
+
+  const clearClicked = () => {
+    dispatch(clearFromBasket(beer));
+    dispatch(setBasketTotal());
+  }
 
   return (
     <div className="BasketItemContainer">
@@ -23,18 +36,18 @@ const BasketItem = ({ item }) => {
       </div>
       <div className="BasketItemQuantityContainer">
         <span>
-          <div className="arrow" onClick={() => removeFromBasket(item)}>
+          <div className="arrow" onClick={leftArrowClicked}>
             &#10094;
           </div>
           <span className="quantity">{quantity}</span>
-          <div className="arrow" onClick={() => addToBasket(item, 1)}>
+          <div className="arrow" onClick={rightArrowClicked}>
             &#10095;
           </div>
         </span>
         <button
           className="btn-clear"
           type="button"
-          onClick={() => clearFromBasket(item)}
+          onClick={clearClicked}
         >
           Clear
         </button>

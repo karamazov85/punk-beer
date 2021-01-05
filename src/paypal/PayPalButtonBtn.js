@@ -1,13 +1,18 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { PayPalButton } from "react-paypal-button-v2";
 import "./PayPalButtonBtn.styles.scss";
 
-const PayPalButtonBtn = ({ amount, currency_code }) => (
+const PayPalButtonBtn = ({ amount }) => {
+  
+  const currencyCode = useSelector(state => state.basket.currencyCode)
+
+  return (
   <div className="paypal-checkout-button">
     <PayPalButton
       options={{
         clientId: "sb",
-        currency: currency_code,
+        currency: currencyCode,
       }}
       className="button-paypal"
       currency="GBP"
@@ -24,7 +29,7 @@ const PayPalButtonBtn = ({ amount, currency_code }) => (
           purchase_units: [
             {
               amount: {
-                currency_code: currency_code,
+                currency_code: currencyCode,
                 value: amount,
               },
             },
@@ -51,6 +56,7 @@ const PayPalButtonBtn = ({ amount, currency_code }) => (
       }}
     />
   </div>
-);
+)
+};
 
 export default PayPalButtonBtn;

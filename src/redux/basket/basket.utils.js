@@ -25,8 +25,8 @@ export const removeItemFromBasket = (basketItems, payload) => {
   if (!payload) {
     return;
   }
-  const { beer } = payload;
-  const beerCopy = { ...beer } // workaround to overcome beer object inextensibility - Object.preventExtensions() marks the original beer object as inextensible for some reason
+  
+  const beerCopy = { ...payload } // workaround to overcome object inextensibility - Object.preventExtensions() marks the original beer/payload object as inextensible for some reason
 
   if (!basketItems[beerCopy.id]) {
     return;
@@ -43,12 +43,12 @@ export const removeItemFromBasket = (basketItems, payload) => {
   };
 };
 
-export const clearItemFromBasket = (item, basketItems) => {
-  if (!item) {
+export const clearItemFromBasket = (basketItems, payload) => {
+  if (!payload) {
     return;
   }
 
-  delete basketItems[item.id];
+  delete basketItems[payload.id];
 
   return {
     ...basketItems,
