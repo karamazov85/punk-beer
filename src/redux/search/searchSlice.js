@@ -1,6 +1,6 @@
 
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchBeers, addPrice, fetchAllBeers, prepDataForAutoComplete, sortAtoZ, sortZtoA, sortByDate, sortABVhighToLow, sortABVlowToHigh, filterByName, filterByMinPrice, filterByMaxPrice, filterByBrewDate, applyCurrency, getCurrencySign } from "./search.utils";
+import { fetchBeers, getSearchParamsFromSlug, addPrice, fetchAllBeers, prepDataForAutoComplete, sortAtoZ, sortZtoA, sortByDate, sortABVhighToLow, sortABVlowToHigh, filterByName, filterByMinPrice, filterByMaxPrice, filterByBrewDate, applyCurrency, getCurrencySign } from "./search.utils";
 
 export const slice = createSlice({
     name: "search", 
@@ -12,6 +12,7 @@ export const slice = createSlice({
             pageNum: 1,
             productsPerPage: 10, 
         },
+        isFetching: false,
         dataForAutoComplete: {},
         currencyCode: "GBP",
         currencySign: "£",
@@ -19,6 +20,12 @@ export const slice = createSlice({
     reducers: {
         setSearchParams: (state, action) => {
             state.searchParams = action.payload
+        },
+        setIsFetchingTrue: state => {
+            state.isFetching = true;
+        },
+        setIsFetchingFalse: state => {
+            state.isFetching = false;
         },
         setSearchResult: (state, action) => {
             state.searchResult = action.payload;
@@ -80,36 +87,25 @@ export const slice = createSlice({
     }
 });     
 
-export const { setSearchParams, setSearchResult, setDataForAutoComplete, setSearchComplete, sortSearchResultAtoZ, sortSearchResultZtoA, sortSearchResultByDate, sortByAbvHighToLow, sortByAbvLowToHigh, filterSearchResultByName, filterSearchResultByMinPrice, filterSearchResultByMaxPrice, filterSearchResultByBrewDate, setPricesInNewCurrencyInSearch, setNewCurrencySignInSearch, setNewCurrencyCodeInSearch} = slice.actions;
+export const { setSearchParams, setIsFetchingTrue, setIsFetchingFalse, setSearchResult, setDataForAutoComplete, setSearchComplete, sortSearchResultAtoZ, sortSearchResultZtoA, sortSearchResultByDate, sortByAbvHighToLow, sortByAbvLowToHigh, filterSearchResultByName, filterSearchResultByMinPrice, filterSearchResultByMaxPrice, filterSearchResultByBrewDate, setPricesInNewCurrencyInSearch, setNewCurrencySignInSearch, setNewCurrencyCodeInSearch} = slice.actions;
 
 // THUNKS
-export const fetchBeersOnInit = () => async dispatch => {
-    const searchParamsForAppInitAPICall = { 
-            searchText: "",
-            searchType: "beer_name",
-            pageNum: 1,
-            productsPerPage: 10, 
-        }
-    const { searchText, searchType, pageNum, productsPerPage } = searchParamsForAppInitAPICall;
+export const fetchBeersAsync = slug => async (dispatch, getState) => {
+    // URL has changed. Set the search params accordingly in reducer
+    const newSearchParams = getSearchParamsFromSlug(slug)
+    dispatch(setSearchParams(newSearchParams))
+    const { searchText, searchType, pageNum, productsPerPage } = newSearchParams;
     try {
+        // fetch beer(s) based on updated search params
+        dispatch(setIsFetchingTrue());
         const beersFromAPI = await fetchBeers(searchText, searchType, pageNum, productsPerPage);
         const beersWithPrices = addPrice(beersFromAPI);
-        dispatch(setSearchResult(beersWithPrices));
-    } catch (err) {
-        console.log(err)
-    }
-}
 
-export const fetchBeersAsync = searchParams => async (dispatch, getState) => {
-    dispatch(setSearchParams(searchParams))
-    const { searchText, searchType, pageNum, productsPerPage } = searchParams;
-    try {
-        const beersFromAPI = await fetchBeers(searchText, searchType, pageNum, productsPerPage);
-        const beersWithPrices = addPrice(beersFromAPI);
-        // check if currencyCode has changed, apply local currency
+        // check if currencyCode has changed in the store, apply local currency
         const currencyCode = getState().search.currencyCode; 
         const beersInCurrentCurrency = applyCurrency(beersWithPrices, currencyCode);
         dispatch(setSearchResult(beersInCurrentCurrency));
+        dispatch(setIsFetchingFalse());
     } catch (err) {
         console.log(err)
     }
@@ -126,38 +122,3 @@ export const fetchDataForAutoComplete = () => async dispatch => {
   };
 
 export default slice.reducer;
-
-
-
-
-
-
-
-
-
-
-
-
-// const INITIAL_STATE = {
-//     searchResults: [],
-//     searchParams: { 
-//         searchText: "",
-//         searchType: "",
-//         pageNum: 1,
-//         productsPerPage: 10 
-//     }
-// }
-
-// const searchReducer = (state = INITIAL_STATE, action) => {
-//     debugger;
-//     switch(action.type) {
-//         case "SET_SEARCH_RESULTS":
-//             return {...state,
-//                     searchResults: [...state.searchResults, ...action.payload]
-//             }
-//         default:
-//             return state;
-//     }
-// }
-
-// export default searchReducer;

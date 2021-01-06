@@ -1,14 +1,30 @@
-import React, { useEffect } from "react";
-import { Link } from "react-router-dom"
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom"
+import { useSelector, useDispatch } from "react-redux";
+import { fetchBeersAsync } from "../redux/search/searchSlice";
+import { updateSlugWithNewPaginationParams } from "../redux/search/search.utils";
 import SortSearchFilter from "./SortSearchFilter";
 import ProductCard from "./ProductCard";
 import Pagination from "./Pagination";
-import "../styles/Browse.styles.scss";
+import "../styles/SearchResults.styles.scss";
 
 const SearchResults = () => {
+  const urlParams = useParams();
+  const { slug } = urlParams;
+
   const searchResult = useSelector(state => state.search.searchResult);
-  const searchComplete = useSelector(state => state.search.searchComplete);
+  const dispatch = useDispatch();
+  
+  const [newPaginationParams, setNewPaginationParams] = useState({ pageNum: 1, productsPerPage: 10 });
+
+  useEffect(() => {
+    dispatch(fetchBeersAsync(slug))
+  },[slug])
+
+  useEffect(() => {
+    const newSlug = updateSlugWithNewPaginationParams(slug, newPaginationParams); 
+    dispatch(fetchBeersAsync(newSlug))
+  },[newPaginationParams])
 
   return (
     <div className="browse-container">
@@ -21,16 +37,12 @@ const SearchResults = () => {
           <ProductCard key={beer.id} beer={beer} />
         ))}
       </div>
-      {searchComplete ? (
         <div className="back-to-browse-container">
-          <div className="back-container">
-            <Link to="/" className="back-to-browse-button">
+            <Link to="/" className="back-to-browse-link">
               BACK TO BROWSE
             </Link>
-          </div>
         </div>
-      ) : null} 
-      <Pagination />
+      <Pagination onPaginationChange={setNewPaginationParams}/>
     </div>
   );
 };

@@ -1,6 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchBeersOnInit } from "../redux/search/searchSlice";
+import { fetchBeersAsync } from "../redux/search/searchSlice";
+import { updateSlugWithNewPaginationParams } from "../redux/search/search.utils";
 import SortSearchFilter from "./SortSearchFilter";
 import ProductCard from "./ProductCard";
 import Pagination from "./Pagination";
@@ -10,9 +11,14 @@ const Browse = () => {
   const searchResult = useSelector(state => state.search.searchResult);
   const dispatch = useDispatch()
   
+  const [newPaginationParams, setNewPaginationParams] = useState({ pageNum: 1, productsPerPage: 10 });
+
   useEffect(() => {
-    dispatch(fetchBeersOnInit());
-  })
+    // we pass in undefined for old slug here as we are on route "/" at this stage so nothing to pass in.
+    // we will deal with this problem through guard clauses in the utility functions.
+    const newSlug = updateSlugWithNewPaginationParams(undefined, newPaginationParams); 
+    dispatch(fetchBeersAsync(newSlug))
+  },[newPaginationParams])
 
   return (
     <div className="browse-container">
@@ -25,7 +31,7 @@ const Browse = () => {
           <ProductCard key={beer.id} beer={beer} />
         ))}
       </div>
-      <Pagination />
+      <Pagination onPaginationChange={setNewPaginationParams}/>
     </div>
   );
 };

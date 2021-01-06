@@ -36,7 +36,7 @@ const Autocomplete = forwardRef(
     };
 
     const handleClickOutside = (event) => {
-      console.log(ref)
+      // console.log(ref)
       const { current: autoCompleteRef } = ref;
       console.log("fire handleClickOutside", event.target, autoCompleteRef)
       if (autoCompleteRef && !autoCompleteRef.contains(event.target)) {
@@ -45,7 +45,7 @@ const Autocomplete = forwardRef(
     };
 
     useEffect(() => {
-      console.log("add mousedown")
+      // console.log("add mousedown")
       window.addEventListener("mousedown", handleClickOutside);
       return () => {
         window.removeEventListener("mousedown", handleClickOutside);

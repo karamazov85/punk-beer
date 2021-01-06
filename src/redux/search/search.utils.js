@@ -20,14 +20,14 @@ export async function fetchBeers(
   return beers;
 }
 
-export async function fetchBeerByBeerId(beerId) {
-  if (!beerId) {
-    return;
-  }
-  const res = await fetch(`https://api.punkapi.com/v2/beers/${beerId}`);
-  const beer = await res.json();
-  return beer;
-}
+// export async function fetchBeerByBeerId(beerId) {
+//   if (!beerId) {
+//     return;
+//   }
+//   const res = await fetch(`https://api.punkapi.com/v2/beers/${beerId}`);
+//   const beer = await res.json();
+//   return beer;
+// }
 
 export async function fetchAllBeers() {
   const beerRequests = new Array(5)
@@ -51,6 +51,7 @@ function parseBeerResponses(beerResponses) {
 }
 
 export function prepDataForAutoComplete(allBeers) {
+  
   const beer_name_bulk = [];
   const yeast_bulk = [];
   const malt_3d = [];
@@ -110,12 +111,48 @@ export function prepDataForAutoComplete(allBeers) {
   };
 }
 
+export const getSearchParamsFromSlug = (slug) => {
+  let params = slug.split("-"); 
+
+  // if we have a full slug set by an actual search
+  if (params.length === 4) {
+      return {
+      searchText: params[1],
+      searchType: params[0],
+      pageNum: params[2],
+      productsPerPage: params[3], 
+    }
+  } 
+  // we only cliked a pagination button on the Browse page, no searchType or searchText in slug
+  if (params.length === 2) {
+    return {
+      searchText: "",
+      searchType: "beer_name",
+      pageNum: params[0],
+      productsPerPage: params[1],
+    }
+  }
+}
+
+export const updateSlugWithNewPaginationParams = (slug, paginationParams) => {
+  
+  const { pageNum, productsPerPage } = paginationParams;
+  
+  if (!slug || slug === undefined) {
+    return `${pageNum}-${productsPerPage}`
+  }
+
+  let oldParams = getSearchParamsFromSlug(slug);
+  const { searchText, searchType } = oldParams;
+  const newSlug = `${searchType}-${searchText}-${pageNum}-${productsPerPage}`
+
+  return newSlug;
+}
+
 export const addPrice = beers => {
   return beers.map((beer) => {
     beer.price = 4.5;
     beer.price_GBP = 4.5;
-    // beer.price_USD = parseFloat((beer.price_GBP * 1.2).toFixed(2));
-    // beer.price_EUR = parseFloat((beer.price_GBP * 1.1).toFixed(2));
     return beer; 
   })
 }

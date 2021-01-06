@@ -4,21 +4,25 @@ import { fetchBeersAsync } from "../redux/search/searchSlice";
 import PaginationButton from "./PaginationButton";
 import "../styles/PaginationStyle.scss";
 
-const Pagination = () => {
+const Pagination = ({ onPaginationChange }) => {
 
  const searchParams = useSelector(state => state.search.searchParams); 
  const dispatch = useDispatch();
+ const { pageNum, productsPerPage } = searchParams;
 
   const handlePageNumClick = (e) => {
+  
     e.preventDefault();
     const newPageNum = e.target.value;
-    dispatch(fetchBeersAsync({ ...searchParams, pageNum: newPageNum}))
+    // dispatch(fetchBeersAsync({ ...searchParams, pageNum: newPageNum}))
+    onPaginationChange({ pageNum: newPageNum, productsPerPage})
   };
 
   const handleProductsPerPageClick = (e) => {
     e.preventDefault();
-    const newProductsPerPageNum = e.target.value;
-    dispatch(fetchBeersAsync({ ...searchParams, productsPerPage: newProductsPerPageNum }))
+    const newProductsPerPage = e.target.value;
+    // dispatch(fetchBeersAsync({ ...searchParams, productsPerPage: newProductsPerPage }))
+    onPaginationChange({ pageNum, productsPerPage: newProductsPerPage })
   };
 
   return (

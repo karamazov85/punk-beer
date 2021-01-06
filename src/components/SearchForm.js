@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { fetchBeersAsync, fetchDataForAutoComplete, setSearchComplete } from "../redux/search/searchSlice";
+import { fetchDataForAutoComplete } from "../redux/search/searchSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Autocomplete from "./Autocomplete";
 
@@ -34,9 +34,7 @@ const SearchForm = ({ selectedSearchType, name, placeholder }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(fetchBeersAsync({searchText: newSearchText, searchType: selectedSearchType, pageNum: 1, productsPerPage: 10}));
-    dispatch(setSearchComplete(true));
-    history.push(`/search-result/${newSearchText}`);
+    history.push(`/search/${selectedSearchType}-${newSearchText}-1-10`);
     setNewSearchText("");
     setDisplayAutoComplete(false);
   };
