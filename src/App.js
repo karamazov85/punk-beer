@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Browse from "./components/Browse";
+import SearchResult from "./components/SearchResults";
 import Basket from "./components/Basket";
 import Footer from "./components/Footer";
 import BeerDetails from "./components/BeerDetails";
@@ -16,6 +17,7 @@ function App() {
 				<Header />
 				<Switch>
 					<Route exact path="/" component={Browse} />
+					<Route exact path={"/search-result/:query"} component={SearchResult} />
 					<Route path="/basket" component={Basket} />
 					<Route path={"/:beerId"} component={BeerDetails} />
 				</Switch>

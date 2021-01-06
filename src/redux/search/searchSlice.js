@@ -13,7 +13,6 @@ export const slice = createSlice({
             productsPerPage: 10, 
         },
         dataForAutoComplete: {},
-        searchComplete: false,
         currencyCode: "GBP",
         currencySign: "£",
     },

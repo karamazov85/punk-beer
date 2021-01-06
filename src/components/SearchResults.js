@@ -1,23 +1,19 @@
 import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { fetchBeersOnInit } from "../redux/search/searchSlice";
+import { Link } from "react-router-dom"
+import { useSelector } from "react-redux";
 import SortSearchFilter from "./SortSearchFilter";
 import ProductCard from "./ProductCard";
 import Pagination from "./Pagination";
 import "../styles/Browse.styles.scss";
 
-const Browse = () => {
+const SearchResults = () => {
   const searchResult = useSelector(state => state.search.searchResult);
-  const dispatch = useDispatch()
-  
-  useEffect(() => {
-    dispatch(fetchBeersOnInit());
-  })
+  const searchComplete = useSelector(state => state.search.searchComplete);
 
   return (
     <div className="browse-container">
       <div className="jumbotron-container">
-        <h1>browse</h1>
+        <h1>results</h1>
       </div>
       <SortSearchFilter />
       <div className="products-grid">
@@ -25,9 +21,18 @@ const Browse = () => {
           <ProductCard key={beer.id} beer={beer} />
         ))}
       </div>
+      {searchComplete ? (
+        <div className="back-to-browse-container">
+          <div className="back-container">
+            <Link to="/" className="back-to-browse-button">
+              BACK TO BROWSE
+            </Link>
+          </div>
+        </div>
+      ) : null} 
       <Pagination />
     </div>
   );
 };
 
-export default Browse;
+export default SearchResults;

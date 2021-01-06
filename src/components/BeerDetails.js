@@ -9,14 +9,24 @@ import {
 } from "../redux/search/search.utils";
 
 const BeerDetails = () => {
+  // Redux selectors, disptach
+  const searchResult = useSelector(state => state.search.searchResult)
+  const currencySign = useSelector(state => state.search.currencySign);
+  const dispatch = useDispatch()
+
+  // get id from URL
   const params = useParams();
   const beerId = parseInt(params.beerId);
-  const searchResult = useSelector(state => state.search.searchResult)
+
+  // get beer from store using that id
   const beer = searchResult.find(beer => beer.id === beerId);
   const selectBeerData = getSelectedBeerDetails(beer)
   const { name, image_url, abv, ibu, price, tagline, description } = selectBeerData;
-  const currencySign = useSelector(state => state.search.currencySign);
+
+  // for shopping widget on page
   const [quantity, setQuantity] = useState(1);
+  
+  // for FULL FACTSHEET modal 
   const modalRef = useRef();
 
   const handleQtyChange = (e) => {
@@ -36,8 +46,6 @@ const BeerDetails = () => {
     e.preventDefault();
     setQuantity((quantity) => quantity + 1);
   };
-
-  const dispatch = useDispatch()
 
   const handleSubmit = (e) => {
     e.preventDefault();
