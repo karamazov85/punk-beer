@@ -9,8 +9,6 @@ const SearchForm = ({ selectedSearchType, name, placeholder }) => {
   const [displayAutoComplete, setDisplayAutoComplete] = useState(false);
   const [options, setOptions] = useState(null);
   
-  const autoCompleteRef = useRef(null);
-  
   const dispatch = useDispatch();
   const dataForAutoComplete = useSelector(state => state.search.dataForAutoComplete);
   
@@ -59,7 +57,6 @@ const SearchForm = ({ selectedSearchType, name, placeholder }) => {
         onChange={handleChange}
       />
       <Autocomplete
-        ref={autoCompleteRef}
         options={options}
         displayAutoComplete={displayAutoComplete}
         setDisplayAutoComplete={setDisplayAutoComplete}

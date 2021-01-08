@@ -46,7 +46,7 @@ const ProductCard = ({ beer }) => {
         <div className="product-card-inner">
           <div
             className="product-info-container"
-            onClick={() => history.push(`/beerDetails/${id}`)}
+            onClick={() => history.push(`/beer-details/${id}`)}
           >
             <h1 className="beer-name">{name}</h1>
             <p className="beer-type">{tagline}</p>

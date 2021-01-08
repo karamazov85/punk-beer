@@ -19,7 +19,7 @@ function App() {
 					<Route exact path="/" component={Browse} />
 					<Route exact path={"/search/:slug"} component={SearchResult} />
 					<Route path="/basket" component={Basket} />
-					<Route path={"/beerDetails/:beerId"} component={BeerDetails} />
+					<Route path={"/beer-details/:beerId"} component={BeerDetails} />
 				</Switch>
 				<Footer />
 			</div>

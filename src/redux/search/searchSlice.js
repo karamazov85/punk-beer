@@ -1,6 +1,6 @@
 
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchBeers, getSearchParamsFromSlug, addPrice, fetchAllBeers, prepDataForAutoComplete, sortAtoZ, sortZtoA, sortByDate, sortABVhighToLow, sortABVlowToHigh, filterByName, filterByMinPrice, filterByMaxPrice, filterByBrewDate, applyCurrency, getCurrencySign } from "./search.utils";
+import { fetchBeers, fetchBeerByBeerId, getSearchParamsFromSlug, addPrice, fetchAllBeers, prepDataForAutoComplete, sortAtoZ, sortZtoA, sortByDate, sortABVhighToLow, sortABVlowToHigh, filterByName, filterByMinPrice, filterByMaxPrice, filterByBrewDate, applyCurrency, getCurrencySign } from "./search.utils";
 
 export const slice = createSlice({
     name: "search", 
@@ -106,6 +106,17 @@ export const fetchBeersAsync = slug => async (dispatch, getState) => {
         const beersInCurrentCurrency = applyCurrency(beersWithPrices, currencyCode);
         dispatch(setSearchResult(beersInCurrentCurrency));
         dispatch(setIsFetchingFalse());
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+export const fetchBeerByIdAsync = beerId => async dispatch => {
+    try {   
+      dispatch(setIsFetchingTrue());
+      const beerFromAPI = await fetchBeerByBeerId(beerId);
+      console.log(beerFromAPI)
+      
     } catch (err) {
         console.log(err)
     }

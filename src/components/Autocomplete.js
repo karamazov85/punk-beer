@@ -1,18 +1,17 @@
-import React, { useEffect, forwardRef } from "react";
+import React, { useEffect, useRef } from "react";
 import "../styles/Autocomplete.styles.scss";
 import { matchRegex } from "../helpers/matchRegex";
 
-const Autocomplete = forwardRef(
-  (
-    {
+const Autocomplete = ({
       options,
       searchText,
       updateSearchText,
       displayAutoComplete,
       setDisplayAutoComplete,
-    },
-    ref
-  ) => {
+    }) => {
+
+    const autoCompleteRef = useRef()
+
     const populateAutoComplete = () => {
       const matchResults = options.filter((option) =>
         option && option.match(matchRegex(searchText))
@@ -35,31 +34,23 @@ const Autocomplete = forwardRef(
       ));
     };
 
-    const handleClickOutside = (event) => {
-      // console.log(ref)
-      const { current: autoCompleteRef } = ref;
-      console.log("fire handleClickOutside", event.target, autoCompleteRef)
-      if (autoCompleteRef && !autoCompleteRef.contains(event.target)) {
+    const handleClickOutside = (e) => {
+      if (autoCompleteRef.current && !autoCompleteRef.current.contains(e.target)) {
         setDisplayAutoComplete(false);
+        updateSearchText("");
       }
     };
 
     useEffect(() => {
-      // console.log("add mousedown")
       window.addEventListener("mousedown", handleClickOutside);
       return () => {
         window.removeEventListener("mousedown", handleClickOutside);
       };
-    });
-
-    if (!displayAutoComplete) {
-      return;
-    }
+    }, []);
 
     return (
-      <div className="autocomplete-container">{populateAutoComplete()}</div>
+      displayAutoComplete ? <div ref={autoCompleteRef} className="autocomplete-container">{populateAutoComplete()}</div> : null
     );
-  }
-);
+}
 
 export default Autocomplete;

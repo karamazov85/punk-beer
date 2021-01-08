@@ -1,7 +1,9 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { addToBasket, setBasketTotal} from "../redux/basket/basketSlice";
+import { fetchBeerByBeerId } from "../redux/search/search.utils";
+import { useFetch, usePriceBeer } from "../redux/search/search.hooks";
 import Modal from "../components/Modal";
 import "../styles/BeerDetails.styles.scss";
 import {
@@ -9,17 +11,16 @@ import {
 } from "../redux/search/search.utils";
 
 const BeerDetails = () => {
-  // Redux selectors, disptach
-  const searchResult = useSelector(state => state.search.searchResult)
-  const currencySign = useSelector(state => state.search.currencySign);
-  const dispatch = useDispatch()
-
   // get id from URL
   const params = useParams();
-  const beerId = parseInt(params.beerId);
+  const { beerId } = params;
 
-  // get beer from store using that id
-  const beer = searchResult.find(beer => beer.id === beerId);
+  // fetch that beer, apply local price
+  const { data } = useFetch(beerId, [])
+  // const { beer } = fetchBeerByBeerId(beerId)
+  const beer = usePriceBeer(data)
+  
+  // get the selected data from beer
   const selectBeerData = getSelectedBeerDetails(beer)
   const { name, image_url, abv, ibu, price, tagline, description } = selectBeerData;
 
@@ -28,6 +29,10 @@ const BeerDetails = () => {
   
   // for FULL FACTSHEET modal 
   const modalRef = useRef();
+
+  // other Redux shit
+  const currencySign = useSelector(state => state.search.currencySign);
+  const dispatch = useDispatch()
 
   const handleQtyChange = (e) => {
     const quantityFromForm = parseInt(e.target.value);
@@ -57,27 +62,6 @@ const BeerDetails = () => {
     dispatch(setBasketTotal())
     setQuantity(1);
   };
-
-  // async function checkAndFetchBeer() {
-  //   console.log("MOUNTED")
-  //   let currentBeer = {};
-    
-  //   // if user arrives here from Browse page
-  //   if (searchResult) {
-  //     currentBeer = searchResult.find(beer => beer.id === beerId);
-  //   } else {
-  //     // BUG: with 'else' it's not fired at all, even when it should be.
-  //     currentBeer = await fetchBeerByBeerId(beerId)
-  //   }
-    
-  //   const selectedBeerDetails = getSelectedBeerDetails(currentBeer);
-  //   setBeer(selectedBeerDetails);
-  // }
-
-  // useEffect(() => {
-  //   checkAndFetchBeer();
-  // }, []);
-
 
   return (
     <div className="container">

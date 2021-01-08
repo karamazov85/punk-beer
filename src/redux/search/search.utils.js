@@ -20,14 +20,15 @@ export async function fetchBeers(
   return beers;
 }
 
-// export async function fetchBeerByBeerId(beerId) {
-//   if (!beerId) {
-//     return;
-//   }
-//   const res = await fetch(`https://api.punkapi.com/v2/beers/${beerId}`);
-//   const beer = await res.json();
-//   return beer;
-// }
+export async function fetchBeerByBeerId(beerId) {
+  debugger
+  if (!beerId) {
+    return;
+  }
+  const res = await fetch(`https://api.punkapi.com/v2/beers/${beerId}`);
+  const beer = await res.json();
+  return beer[0];
+}
 
 export async function fetchAllBeers() {
   const beerRequests = new Array(5)
@@ -150,11 +151,20 @@ export const updateSlugWithNewPaginationParams = (slug, paginationParams) => {
 }
 
 export const addPrice = beers => {
-  return beers.map((beer) => {
-    beer.price = 4.5;
-    beer.price_GBP = 4.5;
-    return beer; 
-  })
+  
+  if(Array.isArray(beers)) {
+    const beersWithPrices = beers.map((beer) => {
+      beer.price = 4.5;
+      beer.price_GBP = 4.5;
+      return beer; 
+    })
+    return beersWithPrices
+
+  } else {
+    beers.price = 4.5;
+    beers.price_GBP = 4.5
+    return beers;
+  }
 }
 
 export const sortByDate = (searchResult) => {
@@ -240,14 +250,19 @@ export const filterByBrewDate = (searchResult, date) => {
   );
 };
 
-export const applyCurrency = (beersWithPrices, currencyCode) => {
+export const applyCurrency = (withPrice, currencyCode) => {
   
-  let beersWithCurrentCurrency = beersWithPrices.map((beer) => {
-    beer.price = currencyConverter(beer.price_GBP, currencyCode)
-    return beer;
-  });
+  if(Array.isArray(withPrice)) {
+      let withCurrentCurrency = withPrice.map((beer) => {
+      beer.price = currencyConverter(beer.price_GBP, currencyCode)
+      return beer;
+    });
+    return withCurrentCurrency;
 
-  return beersWithCurrentCurrency;
+  } else {
+    withPrice.price = currencyConverter(withPrice.price_GBP, currencyCode)
+    return withPrice;
+  }
 };
 
 export const getCurrencySign = (currencyCode) => {
