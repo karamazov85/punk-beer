@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { addToBasket, setBasketTotal} from "../redux/basket/basketSlice";
-import { fetchBeerByBeerId } from "../redux/search/search.utils";
+import { addPrice, applyCurrency } from "../redux/search/search.utils";
 import { useFetch, usePriceBeer } from "../redux/search/search.hooks";
 import Modal from "../components/Modal";
 import "../styles/BeerDetails.styles.scss";
@@ -11,28 +11,56 @@ import {
 } from "../redux/search/search.utils";
 
 const BeerDetails = () => {
+  
+  const [selectBeerData, setSelectBeerData] = useState({
+    id: null, 
+    name: "", 
+    image_url: "", 
+    abv: null, 
+    ibu: "",
+    price: null, 
+    tagline: "", 
+    description: ""
+  })
+  
   // get id from URL
   const params = useParams();
   const { beerId } = params;
-
-  // fetch that beer, apply local price
-  const { data } = useFetch(beerId, [])
-  // const { beer } = fetchBeerByBeerId(beerId)
-  const beer = usePriceBeer(data)
   
-  // get the selected data from beer
-  const selectBeerData = getSelectedBeerDetails(beer)
-  const { name, image_url, abv, ibu, price, tagline, description } = selectBeerData;
+
+  const { beer } = useFetch(beerId)
+
+  // other Redux stuff
+  const dispatch = useDispatch()
+  const currencySign = useSelector(state => state.search.currencySign);
+  const currencyCode = useSelector(state => state.search.currencyCode);
+
+  useEffect(() => {
+    if(beer) {
+        console.log(beer)
+        const beerPricedInGBP = addPrice(beer)
+        const beerWithCurrency = applyCurrency(beerPricedInGBP, currencyCode);
+        const selectBeerData = getSelectedBeerDetails(beerWithCurrency);
+        setSelectBeerData(selectBeerData)
+    } 
+  }, [beer])
+  
+  useEffect(() => {
+    if(beer) {
+       const beerPricedInGBP = addPrice(beer) 
+       const beerWithCurrency = applyCurrency(beerPricedInGBP, currencyCode);
+       const selectBeerData = getSelectedBeerDetails(beerWithCurrency);
+      setSelectBeerData(selectBeerData)
+    }
+  }, [currencyCode])
+
+  const { id, name, image_url, abv, ibu, price, tagline, description } = selectBeerData;
 
   // for shopping widget on page
   const [quantity, setQuantity] = useState(1);
   
   // for FULL FACTSHEET modal 
   const modalRef = useRef();
-
-  // other Redux shit
-  const currencySign = useSelector(state => state.search.currencySign);
-  const dispatch = useDispatch()
 
   const handleQtyChange = (e) => {
     const quantityFromForm = parseInt(e.target.value);
@@ -64,6 +92,10 @@ const BeerDetails = () => {
   };
 
   return (
+    !selectBeerData 
+    ? 
+    <h2>LOADING...</h2>  
+    :
     <div className="container">
       <div className="main">
         <div className="info-block-1">

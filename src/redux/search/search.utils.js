@@ -283,7 +283,7 @@ export const getCurrencySign = (currencyCode) => {
 }
 
 export const getSelectedBeerDetails = (beer) => {
-  
+
   const {
     id,
     name,

@@ -92,8 +92,9 @@ export const { setSearchParams, setIsFetchingTrue, setIsFetchingFalse, setSearch
 // THUNKS
 export const fetchBeersAsync = slug => async (dispatch, getState) => {
     // URL has changed. Set the search params accordingly in reducer
+    debugger;
     const newSearchParams = getSearchParamsFromSlug(slug)
-    dispatch(setSearchParams(newSearchParams))
+    dispatch(setSearchParams(newSearchParams));
     const { searchText, searchType, pageNum, productsPerPage } = newSearchParams;
     try {
         // fetch beer(s) based on updated search params
