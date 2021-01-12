@@ -27,13 +27,12 @@ const BeerDetails = () => {
   const params = useParams();
   const { beerId } = params;
   
-
-  const { beer } = useFetch(beerId)
-
   // other Redux stuff
   const dispatch = useDispatch()
   const currencySign = useSelector(state => state.search.currencySign);
   const currencyCode = useSelector(state => state.search.currencyCode);
+
+  const { beer } = useFetch(beerId)
 
   useEffect(() => {
     if(beer) {

@@ -2,19 +2,20 @@ import { convertShortDateToISO } from "../../helpers/dateconverter";
 import { currencyConverter } from "../../helpers/currencyconverter";
 
 export async function fetchBeers(
-  searchText,
-  searchType,
-  pageNum,
-  productsPerPage,
+  // searchText,
+  // searchType,
+  // pageNum,
+  // productsPerPage,
+  slug
 ) {
 
-  let endpoint = "";
+  let endpoint = `https://api.punkapi.com/v2/beers${slug}`;
 
-  if (!searchText || !searchType) {
-    endpoint = `https://api.punkapi.com/v2/beers?page=${pageNum}&per_page=${productsPerPage}`;
-  } else {
-    endpoint = `https://api.punkapi.com/v2/beers?${searchType}=${searchText}&page=${pageNum}&per_page=${productsPerPage}`;
-  }
+  // if (!searchText || !searchType) {
+  //   endpoint = `https://api.punkapi.com/v2/beers?page=${pageNum}&per_page=${productsPerPage}`;
+  // } else {
+  //   endpoint = `https://api.punkapi.com/v2/beers?${searchType}=${searchText}&page=${pageNum}&per_page=${productsPerPage}`;
+  // }
   const res = await fetch(endpoint);
   const beers = await res.json();
   return beers;
@@ -112,8 +113,24 @@ export function prepDataForAutoComplete(allBeers) {
   };
 }
 
+export const getSearchParamsFromQueryStr = queryString => {
+  // new URLSearchParams constructor takes a query string and gives as access to loads of methods to extract data from it
+  const queryObj = new URLSearchParams(queryString);
+  
+  let paramsMap = new Map;
+  // queryObj.entries() is iterable but it's not array so we do a for of loop.
+  for (let pair of queryObj.entries()) {
+      paramsMap.set(pair[0], pair[1])
+  }
+  // fold it into an object
+  const searchParams = Object.fromEntries(paramsMap.entries());
+  
+  return searchParams;
+}
+
 export const getSearchParamsFromSlug = (slug) => {
-  let params = slug.split("-"); 
+  debugger
+  let params = slug.split("_"); 
 
   // if we have a full slug set by an actual search
   if (params.length === 4) {
@@ -135,19 +152,26 @@ export const getSearchParamsFromSlug = (slug) => {
   }
 }
 
-export const updateSlugWithNewPaginationParams = (slug, paginationParams) => {
+export const updateQueryStringWithNewPaginationParams = (queryString, paginationParams) => {
   
   const { pageNum, productsPerPage } = paginationParams;
   
-  if (!slug || slug === undefined) {
-    return `${pageNum}-${productsPerPage}`
+  if (!queryString || queryString === undefined) {
+    return `?page=${pageNum}&per_page=${productsPerPage}`
   }
 
-  let oldParams = getSearchParamsFromSlug(slug);
-  const { searchText, searchType } = oldParams;
-  const newSlug = `${searchType}-${searchText}-${pageNum}-${productsPerPage}`
+  let newQueryString = "";
 
-  return newSlug;
+  const oldParams = getSearchParamsFromQueryStr(queryString) 
+  const { searchText, searchType } = oldParams;
+
+  if(!searchText || !searchType) {
+      newQueryString = `?page=${pageNum}&per_page=${productsPerPage}`
+      return newQueryString
+  }
+  newQueryString = `${searchType}=${searchText}&page=${pageNum}&per_page=${productsPerPage}`
+  console.log(newQueryString)
+  return newQueryString;
 }
 
 export const addPrice = beers => {

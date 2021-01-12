@@ -32,7 +32,7 @@ const SearchForm = ({ selectedSearchType, name, placeholder }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    history.push(`/search/${selectedSearchType}-${newSearchText}-1-10`);
+    history.push(`/beers/search?${selectedSearchType}=${newSearchText}&page=1&per_page=10`);
     setNewSearchText("");
     setDisplayAutoComplete(false);
   };

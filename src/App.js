@@ -16,8 +16,8 @@ function App() {
 			<div className="container">
 				<Header />
 				<Switch>
-					<Route exact path="/" component={Browse} />
-					<Route exact path={"/search/:slug"} component={SearchResult} />
+					<Route exact path="/beers" component={Browse} />
+					<Route path={"/beers/:query"} component={SearchResult} />
 					<Route path="/basket" component={Basket} />
 					<Route path={"/beer-details/:beerId"} component={BeerDetails} />
 				</Switch>

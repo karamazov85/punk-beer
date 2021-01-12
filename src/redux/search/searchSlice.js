@@ -1,6 +1,6 @@
 
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchBeers, fetchBeerByBeerId, getSearchParamsFromSlug, addPrice, fetchAllBeers, prepDataForAutoComplete, sortAtoZ, sortZtoA, sortByDate, sortABVhighToLow, sortABVlowToHigh, filterByName, filterByMinPrice, filterByMaxPrice, filterByBrewDate, applyCurrency, getCurrencySign } from "./search.utils";
+import { fetchBeers, fetchBeerByBeerId, getSearchParamsFromSlug, getSearchParamsFromQueryStr, addPrice, fetchAllBeers, prepDataForAutoComplete, sortAtoZ, sortZtoA, sortByDate, sortABVhighToLow, sortABVlowToHigh, filterByName, filterByMinPrice, filterByMaxPrice, filterByBrewDate, applyCurrency, getCurrencySign } from "./search.utils";
 
 export const slice = createSlice({
     name: "search", 
@@ -90,16 +90,32 @@ export const slice = createSlice({
 export const { setSearchParams, setIsFetchingTrue, setIsFetchingFalse, setSearchResult, setDataForAutoComplete, setSearchComplete, sortSearchResultAtoZ, sortSearchResultZtoA, sortSearchResultByDate, sortByAbvHighToLow, sortByAbvLowToHigh, filterSearchResultByName, filterSearchResultByMinPrice, filterSearchResultByMaxPrice, filterSearchResultByBrewDate, setPricesInNewCurrencyInSearch, setNewCurrencySignInSearch, setNewCurrencyCodeInSearch} = slice.actions;
 
 // THUNKS
-export const fetchBeersAsync = slug => async (dispatch, getState) => {
+// export const fetchOnInit = queryString => async (dispatch, getState) => {
+//     try {
+//         dispatch(setIsFetchingTrue());
+//         const beersFromAPI = await fetchBeers(queryString);
+//         const beersWithPrices = addPrice(beersFromAPI);
+//         const currencyCode = getState().search.currencyCode; 
+//         const beersInCurrentCurrency = applyCurrency(beersWithPrices, currencyCode);
+//         dispatch(setSearchResult(beersInCurrentCurrency));
+//         dispatch(setIsFetchingFalse());
+//     } catch (err) {
+//         console.log(err)   
+//     }
+// }
+
+export const fetchBeersAsync = queryString => async (dispatch, getState) => {
+    debugger
     // URL has changed. Set the search params accordingly in reducer
-    debugger;
-    const newSearchParams = getSearchParamsFromSlug(slug)
-    dispatch(setSearchParams(newSearchParams));
-    const { searchText, searchType, pageNum, productsPerPage } = newSearchParams;
+    // const newSearchParams = getSearchParamsFromSlug(slug)
+    const newSearchParamsFromQuery = getSearchParamsFromQueryStr(queryString)
+    console.log(newSearchParamsFromQuery)
+    // dispatch(setSearchParams(newSearchParams));
+    // const { searchText, searchType, pageNum, productsPerPage } = newSearchParams;
     try {
         // fetch beer(s) based on updated search params
         dispatch(setIsFetchingTrue());
-        const beersFromAPI = await fetchBeers(searchText, searchType, pageNum, productsPerPage);
+        const beersFromAPI = await fetchBeers(queryString);
         const beersWithPrices = addPrice(beersFromAPI);
 
         // check if currencyCode has changed in the store, apply local currency

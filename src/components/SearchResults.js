@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom"
+import { Link, useHistory, useLocation } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux";
 import { fetchBeersAsync } from "../redux/search/searchSlice";
-import { updateSlugWithNewPaginationParams } from "../redux/search/search.utils";
+import { updateQueryStringWithNewPaginationParams } from "../redux/search/search.utils";
 import SortSearchFilter from "./SortSearchFilter";
 import ProductCard from "./ProductCard";
 import Pagination from "./Pagination";
 import "../styles/SearchResults.styles.scss";
 
 const SearchResults = () => {
-  const urlParams = useParams();
-  const { slug } = urlParams;
+  
+  const location = useLocation()
+  const { search } = location;
+  const history = useHistory()
+  console.log(location)
 
   const searchResult = useSelector(state => state.search.searchResult);
   const dispatch = useDispatch();
@@ -18,13 +21,15 @@ const SearchResults = () => {
   const [newPaginationParams, setNewPaginationParams] = useState({ pageNum: 1, productsPerPage: 10 });
 
   useEffect(() => {
-    dispatch(fetchBeersAsync(slug))
-  },[slug])
+    console.log(search)
+    dispatch(fetchBeersAsync(search))
+  },[search])
 
-  useEffect(() => {
-    const newSlug = updateSlugWithNewPaginationParams(slug, newPaginationParams); 
-    dispatch(fetchBeersAsync(newSlug))
-  },[newPaginationParams])
+  // useEffect(() => {
+  //   const newQueryString = updateQueryStringWithNewPaginationParams(search, newPaginationParams); 
+  //   dispatch(fetchBeersAsync(newQueryString))
+  //   history.push()
+  // },[newPaginationParams])
 
   return (
     <div className="browse-container">
