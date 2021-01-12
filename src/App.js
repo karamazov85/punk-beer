@@ -1,6 +1,7 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route, useParams } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Header from "./components/Header";
+import Landing from "./components/Landing";
 import Browse from "./components/Browse";
 import SearchResult from "./components/SearchResults";
 import Basket from "./components/Basket";
@@ -16,6 +17,7 @@ function App() {
 			<div className="container">
 				<Header />
 				<Switch>
+					<Route exact path="/" component={Landing} /> 
 					<Route exact path="/beers" component={Browse} />
 					<Route path={"/beers/:query"} component={SearchResult} />
 					<Route path="/basket" component={Basket} />

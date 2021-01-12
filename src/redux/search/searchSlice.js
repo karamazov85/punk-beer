@@ -1,17 +1,11 @@
 
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchBeers, fetchBeerByBeerId, getSearchParamsFromSlug, getSearchParamsFromQueryStr, addPrice, fetchAllBeers, prepDataForAutoComplete, sortAtoZ, sortZtoA, sortByDate, sortABVhighToLow, sortABVlowToHigh, filterByName, filterByMinPrice, filterByMaxPrice, filterByBrewDate, applyCurrency, getCurrencySign } from "./search.utils";
+import { fetchBeers, getSearchParamsFromQueryStr, addPrice, fetchAllBeers, prepDataForAutoComplete, sortAtoZ, sortZtoA, sortByDate, sortABVhighToLow, sortABVlowToHigh, filterByName, filterByMinPrice, filterByMaxPrice, filterByBrewDate, applyCurrency, getCurrencySign } from "./search.utils";
 
 export const slice = createSlice({
     name: "search", 
     initialState: {
         searchResult: [],
-        searchParams: { 
-            searchText: "",
-            searchType: "beer_name",
-            pageNum: 1,
-            productsPerPage: 10, 
-        },
         isFetching: false,
         dataForAutoComplete: {},
         currencyCode: "GBP",
@@ -90,28 +84,10 @@ export const slice = createSlice({
 export const { setSearchParams, setIsFetchingTrue, setIsFetchingFalse, setSearchResult, setDataForAutoComplete, setSearchComplete, sortSearchResultAtoZ, sortSearchResultZtoA, sortSearchResultByDate, sortByAbvHighToLow, sortByAbvLowToHigh, filterSearchResultByName, filterSearchResultByMinPrice, filterSearchResultByMaxPrice, filterSearchResultByBrewDate, setPricesInNewCurrencyInSearch, setNewCurrencySignInSearch, setNewCurrencyCodeInSearch} = slice.actions;
 
 // THUNKS
-// export const fetchOnInit = queryString => async (dispatch, getState) => {
-//     try {
-//         dispatch(setIsFetchingTrue());
-//         const beersFromAPI = await fetchBeers(queryString);
-//         const beersWithPrices = addPrice(beersFromAPI);
-//         const currencyCode = getState().search.currencyCode; 
-//         const beersInCurrentCurrency = applyCurrency(beersWithPrices, currencyCode);
-//         dispatch(setSearchResult(beersInCurrentCurrency));
-//         dispatch(setIsFetchingFalse());
-//     } catch (err) {
-//         console.log(err)   
-//     }
-// }
-
 export const fetchBeersAsync = queryString => async (dispatch, getState) => {
-    debugger
-    // URL has changed. Set the search params accordingly in reducer
-    // const newSearchParams = getSearchParamsFromSlug(slug)
+    // URL has changed
+    console.log(queryString)
     const newSearchParamsFromQuery = getSearchParamsFromQueryStr(queryString)
-    console.log(newSearchParamsFromQuery)
-    // dispatch(setSearchParams(newSearchParams));
-    // const { searchText, searchType, pageNum, productsPerPage } = newSearchParams;
     try {
         // fetch beer(s) based on updated search params
         dispatch(setIsFetchingTrue());
@@ -123,17 +99,6 @@ export const fetchBeersAsync = queryString => async (dispatch, getState) => {
         const beersInCurrentCurrency = applyCurrency(beersWithPrices, currencyCode);
         dispatch(setSearchResult(beersInCurrentCurrency));
         dispatch(setIsFetchingFalse());
-    } catch (err) {
-        console.log(err)
-    }
-}
-
-export const fetchBeerByIdAsync = beerId => async dispatch => {
-    try {   
-      dispatch(setIsFetchingTrue());
-      const beerFromAPI = await fetchBeerByBeerId(beerId);
-      console.log(beerFromAPI)
-      
     } catch (err) {
         console.log(err)
     }

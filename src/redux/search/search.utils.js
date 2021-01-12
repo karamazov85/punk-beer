@@ -2,27 +2,14 @@ import { convertShortDateToISO } from "../../helpers/dateconverter";
 import { currencyConverter } from "../../helpers/currencyconverter";
 
 export async function fetchBeers(
-  // searchText,
-  // searchType,
-  // pageNum,
-  // productsPerPage,
-  slug
+  queryString
 ) {
-
-  let endpoint = `https://api.punkapi.com/v2/beers${slug}`;
-
-  // if (!searchText || !searchType) {
-  //   endpoint = `https://api.punkapi.com/v2/beers?page=${pageNum}&per_page=${productsPerPage}`;
-  // } else {
-  //   endpoint = `https://api.punkapi.com/v2/beers?${searchType}=${searchText}&page=${pageNum}&per_page=${productsPerPage}`;
-  // }
-  const res = await fetch(endpoint);
+  const res = await fetch(`https://api.punkapi.com/v2/beers${queryString}`);
   const beers = await res.json();
   return beers;
 }
 
 export async function fetchBeerByBeerId(beerId) {
-  debugger
   if (!beerId) {
     return;
   }
@@ -115,62 +102,30 @@ export function prepDataForAutoComplete(allBeers) {
 
 export const getSearchParamsFromQueryStr = queryString => {
   // new URLSearchParams constructor takes a query string and gives as access to loads of methods to extract data from it
-  const queryObj = new URLSearchParams(queryString);
+  const queryIterator = new URLSearchParams(queryString);
   
   let paramsMap = new Map;
   // queryObj.entries() is iterable but it's not array so we do a for of loop.
-  for (let pair of queryObj.entries()) {
+  for (let pair of queryIterator.entries()) {
       paramsMap.set(pair[0], pair[1])
   }
-  // fold it into an object
-  const searchParams = Object.fromEntries(paramsMap.entries());
-  
-  return searchParams;
-}
-
-export const getSearchParamsFromSlug = (slug) => {
-  debugger
-  let params = slug.split("_"); 
-
-  // if we have a full slug set by an actual search
-  if (params.length === 4) {
-      return {
-      searchText: params[1],
-      searchType: params[0],
-      pageNum: params[2],
-      productsPerPage: params[3], 
-    }
-  } 
-  // we only cliked a pagination button on the Browse page, no searchType or searchText in slug
-  if (params.length === 2) {
-    return {
-      searchText: "",
-      searchType: "beer_name",
-      pageNum: params[0],
-      productsPerPage: params[1],
-    }
-  }
+  const paramsArr = [ ...paramsMap]
+  return paramsArr;
 }
 
 export const updateQueryStringWithNewPaginationParams = (queryString, paginationParams) => {
-  
-  const { pageNum, productsPerPage } = paginationParams;
+
+  const { page, per_page } = paginationParams;
   
   if (!queryString || queryString === undefined) {
-    return `?page=${pageNum}&per_page=${productsPerPage}`
+    return `?page=${page}&per_page=${per_page}`
   }
-
-  let newQueryString = "";
 
   const oldParams = getSearchParamsFromQueryStr(queryString) 
-  const { searchText, searchType } = oldParams;
+  const searchType = oldParams[0][0]
+  const searchText = oldParams[0][1]
 
-  if(!searchText || !searchType) {
-      newQueryString = `?page=${pageNum}&per_page=${productsPerPage}`
-      return newQueryString
-  }
-  newQueryString = `${searchType}=${searchText}&page=${pageNum}&per_page=${productsPerPage}`
-  console.log(newQueryString)
+  const newQueryString = `?${searchType}=${searchText}&page=${page}&per_page=${per_page}`
   return newQueryString;
 }
 

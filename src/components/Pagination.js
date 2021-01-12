@@ -1,29 +1,23 @@
-import React, { useContext } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { fetchBeersAsync } from "../redux/search/searchSlice";
+import React, { useState, useEffect } from "react";
 import PaginationButton from "./PaginationButton";
 import "../styles/PaginationStyle.scss";
 
 const Pagination = ({ onPaginationChange }) => {
-
- const searchParams = useSelector(state => state.search.searchParams); 
- const dispatch = useDispatch();
- const { pageNum, productsPerPage } = searchParams;
+  const [pagination, setPagination] = useState({ page: 1, per_page: 10 })
 
   const handlePageNumClick = (e) => {
-  
     e.preventDefault();
-    const newPageNum = e.target.value;
-    // dispatch(fetchBeersAsync({ ...searchParams, pageNum: newPageNum}))
-    onPaginationChange({ pageNum: newPageNum, productsPerPage})
+    setPagination({ page: e.target.value, per_page: 10 })
   };
 
   const handleProductsPerPageClick = (e) => {
     e.preventDefault();
-    const newProductsPerPage = e.target.value;
-    // dispatch(fetchBeersAsync({ ...searchParams, productsPerPage: newProductsPerPage }))
-    onPaginationChange({ pageNum, productsPerPage: newProductsPerPage })
+    setPagination({ page: 1, per_page: e.target.value })
   };
+
+  useEffect(() => {
+    onPaginationChange(pagination)
+  }, [pagination])
 
   return (
     <div className="pagination-container">

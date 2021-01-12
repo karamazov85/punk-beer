@@ -11,11 +11,9 @@ import "../styles/Browse.styles.scss";
 const Browse = () => {
   const searchResult = useSelector(state => state.search.searchResult);
   const dispatch = useDispatch()
-  const [newPaginationParams, setNewPaginationParams] = useState({ pageNum: 1, productsPerPage: 10 });
+  const [newPaginationParams, setNewPaginationParams] = useState({ page: 1, per_page: 10 });
 
   useEffect(() => {
-    // // we pass in undefined for old queryString here as we are on route "/" at this stage so nothing to pass in.
-    // // we will deal with this problem through guard clauses in the utility functions.
     const newQueryString = updateQueryStringWithNewPaginationParams(undefined, newPaginationParams); 
     dispatch(fetchBeersAsync(newQueryString))
   },[newPaginationParams])

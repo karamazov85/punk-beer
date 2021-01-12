@@ -13,23 +13,21 @@ const SearchResults = () => {
   const location = useLocation()
   const { search } = location;
   const history = useHistory()
-  console.log(location)
 
   const searchResult = useSelector(state => state.search.searchResult);
   const dispatch = useDispatch();
   
-  const [newPaginationParams, setNewPaginationParams] = useState({ pageNum: 1, productsPerPage: 10 });
+  const [newPaginationParams, setNewPaginationParams] = useState({ page: 1, per_page: 10 });
+
+  console.log("SearchResults RENDERED")
 
   useEffect(() => {
-    console.log(search)
-    dispatch(fetchBeersAsync(search))
-  },[search])
 
-  // useEffect(() => {
-  //   const newQueryString = updateQueryStringWithNewPaginationParams(search, newPaginationParams); 
-  //   dispatch(fetchBeersAsync(newQueryString))
-  //   history.push()
-  // },[newPaginationParams])
+    console.log("USE EFFECT FIRES")
+    const queryString = updateQueryStringWithNewPaginationParams(search, newPaginationParams); 
+    history.push(`/beers/search/${queryString}`)
+    dispatch(fetchBeersAsync(queryString))
+  },[search, newPaginationParams])
 
   return (
     <div className="browse-container">
