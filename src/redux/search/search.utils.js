@@ -104,7 +104,7 @@ export const getSearchParamsFromQueryStr = queryString => {
   // new URLSearchParams constructor takes a query string and gives as access to loads of methods to extract data from it
   const queryIterator = new URLSearchParams(queryString);
   
-  let paramsMap = new Map;
+  let paramsMap = new Map();
   // queryObj.entries() is iterable but it's not array so we do a for of loop.
   for (let pair of queryIterator.entries()) {
       paramsMap.set(pair[0], pair[1])

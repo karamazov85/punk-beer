@@ -2,22 +2,22 @@ import React, { useState, useEffect } from "react";
 import PaginationButton from "./PaginationButton";
 import "../styles/PaginationStyle.scss";
 
-const Pagination = ({ onPaginationChange }) => {
+const Pagination = ({ onPaginationChange, onFullStockClick }) => {
   const [pagination, setPagination] = useState({ page: 1, per_page: 10 })
 
   const handlePageNumClick = (e) => {
     e.preventDefault();
-    setPagination({ page: e.target.value, per_page: 10 })
+    setPagination({ ...pagination, page: e.target.value}) 
   };
 
   const handleProductsPerPageClick = (e) => {
     e.preventDefault();
-    setPagination({ page: 1, per_page: e.target.value })
+    setPagination({ ...pagination, per_page: e.target.value })
   };
 
   useEffect(() => {
     onPaginationChange(pagination)
-  }, [pagination])
+  }, [pagination, onPaginationChange])
 
   return (
     <div className="pagination-container">
@@ -55,6 +55,9 @@ const Pagination = ({ onPaginationChange }) => {
           </PaginationButton>
           <PaginationButton onClick={handleProductsPerPageClick} value={40}>
             40
+          </PaginationButton>
+          <PaginationButton onClick={() => onFullStockClick()} >
+            Full stock!
           </PaginationButton>
         </div>
       </div>

@@ -28,8 +28,10 @@ const FilterQueryPanel = ({ inputParams }) => {
         break;
       case "maxprice":
         dispatch(filterSearchResultByMaxPrice(formData.value));
+        break;
       case "brewdate":
         dispatch(filterSearchResultByBrewDate(formData.value));
+        break;
       default:
         break;
     }

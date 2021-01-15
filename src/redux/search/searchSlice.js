@@ -86,8 +86,6 @@ export const { setSearchParams, setIsFetchingTrue, setIsFetchingFalse, setSearch
 // THUNKS
 export const fetchBeersAsync = queryString => async (dispatch, getState) => {
     // URL has changed
-    console.log(queryString)
-    const newSearchParamsFromQuery = getSearchParamsFromQueryStr(queryString)
     try {
         // fetch beer(s) based on updated search params
         dispatch(setIsFetchingTrue());
@@ -99,8 +97,8 @@ export const fetchBeersAsync = queryString => async (dispatch, getState) => {
         const beersInCurrentCurrency = applyCurrency(beersWithPrices, currencyCode);
         dispatch(setSearchResult(beersInCurrentCurrency));
         dispatch(setIsFetchingFalse());
-    } catch (err) {
-        console.log(err)
+    } catch (error) {
+        console.log(error)
     }
 }
 
@@ -109,9 +107,25 @@ export const fetchDataForAutoComplete = () => async dispatch => {
       const allBeers = await fetchAllBeers();
       const data = prepDataForAutoComplete(allBeers);
       dispatch(setDataForAutoComplete(data));
-    } catch (err) {
-        console.log(err)
+    } catch (error) {
+        console.log(error)
     }
   };
+
+export const fetchFullStock = () => async (dispatch, getState) => { 
+    try {
+        dispatch(setIsFetchingTrue());
+        const beersFromAPI = await fetchAllBeers();
+        const beersWithPrices = addPrice(beersFromAPI);
+
+        // check if currencyCode has changed in the store, apply local currency
+        const currencyCode = getState().search.currencyCode; 
+        const beersInCurrentCurrency = applyCurrency(beersWithPrices, currencyCode);
+        dispatch(setSearchResult(beersInCurrentCurrency));
+        dispatch(setIsFetchingFalse());
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 export default slice.reducer;

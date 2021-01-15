@@ -29,7 +29,7 @@ const BasketItemPreview = ({ beer }) => {
   
   return (
     <div className="basket-preview-item">
-      <img className="basket-preview-img" src={image_url} />
+      <img className="basket-preview-img" src={image_url} alt="product"/>
       <div className="basket-preview-item-info">
         <span className="basket-preview-name">{name}</span>
         <span className="basket-preview-price">{currencySign}{price}</span>

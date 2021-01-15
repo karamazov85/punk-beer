@@ -28,7 +28,7 @@ const BasketItem = ({ beer }) => {
   return (
     <div className="BasketItemContainer">
       <div className="BasketItemNameContainer">
-        <img src={image_url} alt={`image of${name}`} />
+        <img src={image_url} alt={name} />
         <p>{name}</p>
       </div>
       <div className="BasketItemPriceContainer">

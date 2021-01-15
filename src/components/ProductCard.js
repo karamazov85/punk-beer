@@ -55,13 +55,13 @@ const ProductCard = ({ beer }) => {
           </div>
           <div
             className="beer-image-container"
-            onClick={() => history.push(`/${id}`)}
+            onClick={() => history.push(`/beer-details/${id}`)}
           >
             <img src={image_url} alt="beer" />
           </div>
           <div
             className="price-container"
-            onClick={() => history.push(`/${id}`)}
+            onClick={() => history.push(`/beer-details/${id}`)}
           >
             <h1>
               {currencySign}

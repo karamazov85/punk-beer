@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { addItemToBasket, removeItemFromBasket, clearItemFromBasket, calculateBasketTotal, applyCurrencyToBasket, getCurrencySign, calculateBasketItemsCount  } from "./basket.utils.js"
 
-
 export const slice = createSlice({
     name: "basket",
     initialState: {
@@ -48,11 +47,5 @@ export const slice = createSlice({
 })
 
 export const { addToBasket, removeFromBasket, setBasketTotal, clearFromBasket, setPricesInNewCurrencyInBasket, setNewCurrencySignInBasket, setNewCurrencyCodeInBasket, setBasketItemsCount } = slice.actions;
-
-// export const updateBasketTotals = () => (dispatch, getState) => { // order or parameters is CRUCIAL. dipsatch first, getState() second!!!
-//     const basketItems = getState().basket.basketItems;
-//     console.log(basketItems)
-//     dispatch(setBasketTotal())
-// }
 
 export default slice.reducer;

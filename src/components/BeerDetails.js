@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { addToBasket, setBasketTotal} from "../redux/basket/basketSlice";
 import { addPrice, applyCurrency } from "../redux/search/search.utils";
-import { useFetch, usePriceBeer } from "../redux/search/search.hooks";
+import { useFetch } from "../redux/search/search.hooks";
 import Modal from "../components/Modal";
 import "../styles/BeerDetails.styles.scss";
 import {
@@ -11,6 +11,8 @@ import {
 } from "../redux/search/search.utils";
 
 const BeerDetails = () => {
+  
+  window.scrollTo(0, 0);
   
   const [selectBeerData, setSelectBeerData] = useState({
     id: null, 
@@ -36,7 +38,6 @@ const BeerDetails = () => {
 
   useEffect(() => {
     if(beer) {
-        console.log(beer)
         const beerPricedInGBP = addPrice(beer)
         const beerWithCurrency = applyCurrency(beerPricedInGBP, currencyCode);
         const selectBeerData = getSelectedBeerDetails(beerWithCurrency);
@@ -53,12 +54,12 @@ const BeerDetails = () => {
     }
   }, [currencyCode])
 
-  const { id, name, image_url, abv, ibu, price, tagline, description } = selectBeerData;
+  const { name, image_url, abv, ibu, price, tagline, description } = selectBeerData;
 
   // for shopping widget on page
   const [quantity, setQuantity] = useState(1);
   
-  // for FULL FACTSHEET modal 
+  // for FACTSHEET modal 
   const modalRef = useRef();
 
   const handleQtyChange = (e) => {
@@ -91,10 +92,6 @@ const BeerDetails = () => {
   };
 
   return (
-    !selectBeerData 
-    ? 
-    <h2>LOADING...</h2>  
-    :
     <div className="container">
       <div className="main">
         <div className="info-block-1">

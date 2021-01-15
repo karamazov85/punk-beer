@@ -18,7 +18,7 @@ function App() {
 				<Header />
 				<Switch>
 					<Route exact path="/" component={Landing} /> 
-					<Route exact path="/beers" component={Browse} />
+					<Route exact path="/browse" component={Browse} />
 					<Route path={"/beers/:query"} component={SearchResult} />
 					<Route path="/basket" component={Basket} />
 					<Route path={"/beer-details/:beerId"} component={BeerDetails} />

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { fetchDataForAutoComplete } from "../redux/search/searchSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -40,7 +40,7 @@ const SearchForm = ({ selectedSearchType, name, placeholder }) => {
   // on mount, send batch request to get data for autocomplete into redux store
   useEffect(() => {
     dispatch(fetchDataForAutoComplete());
-  }, []);
+  }, [dispatch]);
 
   return (
     <form className="searchField" onSubmit={handleSubmit}>

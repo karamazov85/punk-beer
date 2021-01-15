@@ -19,11 +19,7 @@ const SearchResults = () => {
   
   const [newPaginationParams, setNewPaginationParams] = useState({ page: 1, per_page: 10 });
 
-  console.log("SearchResults RENDERED")
-
   useEffect(() => {
-
-    console.log("USE EFFECT FIRES")
     const queryString = updateQueryStringWithNewPaginationParams(search, newPaginationParams); 
     history.push(`/beers/search/${queryString}`)
     dispatch(fetchBeersAsync(queryString))
