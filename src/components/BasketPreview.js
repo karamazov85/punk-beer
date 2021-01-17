@@ -19,7 +19,7 @@ const BasketPreview = ({ closeBasketPreview }) => {
 
   useEffect(() => {
     dispatch(setBasketItemsCount());
-  },[])
+  },[dispatch])
 
   return (
     <div className="basket-preview-panel">

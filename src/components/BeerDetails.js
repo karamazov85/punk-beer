@@ -101,7 +101,7 @@ const BeerDetails = () => {
           </div>
         </div>
         <div className="beer-media">
-          <img src={image_url} alt="beer image" />
+          <img src={image_url} alt="beer" />
         </div>
         <div className="info-block-2">
           <h5>{tagline}</h5>

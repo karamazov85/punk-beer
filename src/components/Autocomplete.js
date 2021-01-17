@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useCallback } from "react";
 import "../styles/Autocomplete.styles.scss";
 import { matchRegex } from "../helpers/matchRegex";
 
@@ -34,19 +34,19 @@ const Autocomplete = ({
       ));
     };
 
-    const handleClickOutside = (e) => {
+    const handleClickOutside = useCallback((e) => {
       if (autoCompleteRef.current && !autoCompleteRef.current.contains(e.target)) {
         setDisplayAutoComplete(false);
         updateSearchText("");
       }
-    };
+    }, [setDisplayAutoComplete, updateSearchText]);
 
     useEffect(() => {
       window.addEventListener("mousedown", handleClickOutside);
       return () => {
         window.removeEventListener("mousedown", handleClickOutside);
       };
-    }, []);
+    }, [handleClickOutside]);
 
     return (
       displayAutoComplete ? <div ref={autoCompleteRef} className="autocomplete-container">{populateAutoComplete()}</div> : null

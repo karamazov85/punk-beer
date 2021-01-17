@@ -23,7 +23,7 @@ const SearchResults = () => {
     const queryString = updateQueryStringWithNewPaginationParams(search, newPaginationParams); 
     history.push(`/beers/search/${queryString}`)
     dispatch(fetchBeersAsync(queryString))
-  },[search, newPaginationParams])
+  },[search, newPaginationParams, dispatch])
 
   return (
     <div className="browse-container">
