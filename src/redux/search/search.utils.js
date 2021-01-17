@@ -150,9 +150,7 @@ export const sortByDate = (searchResult) => {
 
   const beersWithDatesFormatted = searchResult.map((beer) => {
     const date = beer.first_brewed.split("/").map(el => parseFloat(el));
-    console.log(date)
     beer.formattedDate = new Date(date[1], date[0] - 1, 1); // new Date ( year, month, day ) NOTE: month is 0 indexed so if you want it to be September then you have to give it as 9 - 1. Subtract 1 from the original number of the month.
-    console.log(beer.formattedDate)
     return beer;
   });
   const sorted = beersWithDatesFormatted.sort(
