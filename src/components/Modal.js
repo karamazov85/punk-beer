@@ -47,7 +47,7 @@ const Modal = forwardRef(({ selectBeerData }, ref) => {
             <InfoBox
               name="abv"
               value={abv}
-              imageUrl={"../../assets/abv-white-2.svg"}
+              imageUrl={`${process.env.PUBLIC_URL}/assets/abv-white-2.svg`}
               expandInfoBox={() => setExpandedInfoBoxName("abv")}
               expandedInfoBoxName={expandedInfoBoxName}
               closeInfoBox={() => setExpandedInfoBoxName("")}
@@ -55,7 +55,7 @@ const Modal = forwardRef(({ selectBeerData }, ref) => {
             <InfoBox
               name="ibu"
               value={ibu}
-              imageUrl={"../../assets/ibu-white.svg"}
+              imageUrl={`${process.env.PUBLIC_URL}/assets/ibu-white.svg`}
               expandInfoBox={() => setExpandedInfoBoxName("ibu")}
               expandedInfoBoxName={expandedInfoBoxName}
               closeInfoBox={() => setExpandedInfoBoxName("")}
@@ -63,7 +63,7 @@ const Modal = forwardRef(({ selectBeerData }, ref) => {
             <InfoBox
               name="yeast"
               value={yeast}
-              imageUrl={"../../assets/style-white.svg"}
+              imageUrl={`${process.env.PUBLIC_URL}/assets/style-white.svg`}
               expandInfoBox={() => setExpandedInfoBoxName("yeast")}
               expandedInfoBoxName={expandedInfoBoxName}
               closeInfoBox={() => setExpandedInfoBoxName("")}
@@ -71,7 +71,7 @@ const Modal = forwardRef(({ selectBeerData }, ref) => {
             <InfoBox
               name="og"
               value={target_og}
-              imageUrl={"../../assets/og-white.svg"}
+              imageUrl={`${process.env.PUBLIC_URL}/assets/og-white.svg`}
               expandInfoBox={() => setExpandedInfoBoxName("og")}
               expandedInfoBoxName={expandedInfoBoxName}
               closeInfoBox={() => setExpandedInfoBoxName("")}
@@ -79,7 +79,7 @@ const Modal = forwardRef(({ selectBeerData }, ref) => {
             <InfoBox
               name="malt"
               value={malt}
-              imageUrl={"../../assets/malt-white.svg"}
+              imageUrl={`${process.env.PUBLIC_URL}/assets/malt-white.svg`}
               expandInfoBox={() => setExpandedInfoBoxName("malt")}
               expandedInfoBoxName={expandedInfoBoxName}
               closeInfoBox={() => setExpandedInfoBoxName("")}
@@ -87,7 +87,7 @@ const Modal = forwardRef(({ selectBeerData }, ref) => {
             <InfoBox
               name="hops"
               value={hops}
-              imageUrl={"../../assets/hops-white.svg"}
+              imageUrl={`${process.env.PUBLIC_URL}/assets/hops-white.svg`}
               expandInfoBox={() => setExpandedInfoBoxName("hops")}
               expandedInfoBoxName={expandedInfoBoxName}
               closeInfoBox={() => setExpandedInfoBoxName("")}
