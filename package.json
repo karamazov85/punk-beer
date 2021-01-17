@@ -2,7 +2,7 @@
   "name": "react-punk-beer",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://karamazov85.github.io/",
+  "homepage": "http://karamazov85.github.io/punk-beer",
   "dependencies": {
     "@reduxjs/toolkit": "^1.5.0",
     "@testing-library/jest-dom": "^4.2.4",
