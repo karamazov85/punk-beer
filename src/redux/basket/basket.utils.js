@@ -100,101 +100,13 @@ export const applyCurrencyToBasket = (basketItems, currencyCode) => {
   return beersWithCurrentCurrency_obj;
 };
 
-export const getCurrencySign = (currencyCode) => {
-  switch (currencyCode) {
-    case "GBP":
-      return "£";
-      break;
-    case "USD":
-      return "$";
-      break;
-    case "EUR":
-      return "€";
-      break;
-    default:
-      return "£";
-      break;
-  }
+const CURRENCY_MAP = {
+  GBP: "£",
+  USD: "$",
+  EUR: "€"
 }
 
-// export const changeCurrencyForCountry = (country) => {
-//   switch (country) {
-//     case "UK":
-//       return "GBP";
-//       break;
-//     case "USA":
-//       return "USD";
-//       break;
-//     case "Germany":
-//       return "EUR";
-//       break;
-//     default:
-//       return "GBP";
-//       break;
-//   }
-// };
+export const getCurrencySign = (currencyCode) => {
+  return CURRENCY_MAP[currencyCode] || CURRENCY_MAP.GBP;
+}
 
-export const changeCurrencySignForCountry = (country) => {
-  switch (country) {
-    case "UK":
-      return "£";
-      break;
-    case "USA":
-      return "$";
-      break;
-    case "Germany":
-      return "€";
-      break;
-    default:
-      return "£";
-      break;
-  }
-};
-
-// export const calculateBasketItemsWithCurrentCurrency = (basketItems, prev_currency_code, current_currency_code) => {
-//   const beerArr = Object.entries(basketItems).map(([key, beer]) => {
-//     beer.price = currencyConverter(beer.price, prev_currency_code, current_currency_code);
-//     return beer;
-//   })
-
-//   const basketItemsConverted = beerArr.reduce((acc, currBeer) => {
-//     acc[currBeer[0]] = currBeer[1]
-//     return acc;
-//   },{});
-//   console.log(basketItemsConverted);
-//   return basketItemsConverted; 
-// }
-
-// export const calculateBasketTotalWithCurrentCurrency = (
-//   basketTotal,
-//   prev_currency_code,
-//   current_currency_code
-// ) => {
-//   const subTotal = parseFloat(
-//     currencyConverter(
-//       basketTotal.subTotal,
-//       prev_currency_code,
-//       current_currency_code
-//     ).toFixed(2)
-//   );
-//   const tax = parseFloat(
-//     currencyConverter(
-//       basketTotal.tax,
-//       prev_currency_code,
-//       current_currency_code
-//     ).toFixed(2)
-//   );
-//   const total = parseFloat(
-//     currencyConverter(
-//       basketTotal.total,
-//       prev_currency_code,
-//       current_currency_code
-//     ).toFixed(2)
-//   );
-
-//   return {
-//     subTotal,
-//     tax,
-//     total,
-//   };
-// };

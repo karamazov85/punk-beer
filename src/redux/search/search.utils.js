@@ -244,21 +244,14 @@ export const applyCurrency = (withPrice, currencyCode) => {
   }
 };
 
+const CURRENCY_MAP = {
+  GBP: "£",
+  USD: "$",
+  EUR: "€"
+}
+
 export const getCurrencySign = (currencyCode) => {
-  switch (currencyCode) {
-    case "GBP":
-      return "£";
-      break;
-    case "USD":
-      return "$";
-      break;
-    case "EUR":
-      return "€";
-      break;
-    default:
-      return "£";
-      break;
-  }
+  return CURRENCY_MAP[currencyCode] || CURRENCY_MAP.GBP;
 }
 
 export const getSelectedBeerDetails = (beer) => {

@@ -1,6 +1,6 @@
 
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchBeers, getSearchParamsFromQueryStr, addPrice, fetchAllBeers, prepDataForAutoComplete, sortAtoZ, sortZtoA, sortByDate, sortABVhighToLow, sortABVlowToHigh, filterByName, filterByMinPrice, filterByMaxPrice, filterByBrewDate, applyCurrency, getCurrencySign } from "./search.utils";
+import { fetchBeers, addPrice, fetchAllBeers, prepDataForAutoComplete, sortAtoZ, sortZtoA, sortByDate, sortABVhighToLow, sortABVlowToHigh, filterByName, filterByMinPrice, filterByMaxPrice, filterByBrewDate, applyCurrency, getCurrencySign } from "./search.utils";
 
 export const slice = createSlice({
     name: "search", 

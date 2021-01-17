@@ -165,16 +165,23 @@
             display: block;
             font-family: "Bebas Neue", cursive;
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 10px;
             margin-right: 0px;
           }
 
-          & .alcohol-value {
-            padding: 25px 20px;
-            border-radius: 100%;
+          & .alcohol-value-container {
+            width: 70px;
+            height: 70px;
             background-color: #191919;
-            color: white;
-            margin-right: 0px;
+            border-radius: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            & .alcohol-value {
+              color: white;
+              margin-right: 0px;
+            }
           }
         }
 
@@ -187,16 +194,23 @@
             display: block;
             font-family: "Bebas Neue", cursive;
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 10px;
             margin-right: 0px;
           }
 
-          & .price-value {
-            padding: 25px 20px;
-            border-radius: 100%;
+          & .price-value-container {
+            width: 70px;
+            height: 70px;
             background-color: #191919;
-            color: white;
-            margin-right: 0px;
+            border-radius: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            & .price-value {
+              color: white;
+              margin-right: 0px;
+            }
           }
         }
 
@@ -209,16 +223,23 @@
             display: block;
             font-family: "Bebas Neue", cursive;
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 10px;
             margin-right: 0px;
           }
 
-          & .ibu-value {
-            padding: 25px 20px;
-            border-radius: 100%;
+          & .ibu-value-container {
+            width: 70px;
+            height: 70px;
             background-color: #191919;
-            color: white;
-            margin-right: 0px;
+            border-radius: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            & .ibu-value {
+              color: white;
+              margin-right: 0px;
+            }
           }
         }
       }

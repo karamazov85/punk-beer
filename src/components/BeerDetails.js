@@ -109,15 +109,21 @@ const BeerDetails = () => {
           <div className="abv-price-ibu-container-box">
             <div className="alcohol">
               <span className="alcohol-headline">ABV. vol.</span>
-              <span className="alcohol-value">{abv}%</span>
+              <div className="alcohol-value-container">
+                <span className="alcohol-value">{abv}%</span>
+              </div>
             </div>
             <div className="price">
               <span className="price-headline">Price</span>
-            <span className="price-value">{currencySign}{price}</span>
+              <div className="price-value-container">
+                <span className="price-value">{currencySign}{price}</span>
+              </div>
             </div>
             <div className="ibu">
               <span className="ibu-headline">IBU vol.</span>
-              <span className="ibu-value">{ibu}%</span>
+              <div className="ibu-value-container">
+                <span className="ibu-value">{ibu}%</span>
+              </div>
             </div>
           </div>
           <div className="full-details-container">
