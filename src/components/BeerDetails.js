@@ -12,8 +12,6 @@ import {
 
 const BeerDetails = () => {
   
-  window.scrollTo(0, 0);
-  
   const [selectBeerData, setSelectBeerData] = useState({
     id: null, 
     name: "", 
@@ -42,6 +40,7 @@ const BeerDetails = () => {
         const beerWithCurrency = applyCurrency(beerPricedInGBP, currencyCode);
         const selectBeerData = getSelectedBeerDetails(beerWithCurrency);
         setSelectBeerData(selectBeerData)
+        window.scrollTo(0, 0);
     } 
   }, [beer])
   
@@ -63,6 +62,7 @@ const BeerDetails = () => {
   const modalRef = useRef();
 
   const handleQtyChange = (e) => {
+    e.preventDefault();
     const quantityFromForm = parseInt(e.target.value);
     setQuantity(quantityFromForm);
   };
