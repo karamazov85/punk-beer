@@ -16,10 +16,10 @@ function App() {
 			<div className="container">
 				<Header />
 				<Switch>
-					<Route exact path="/" component={Browse} />
-					<Route path={"/beers/:query"} component={SearchResult} />
-					<Route path="/basket" component={Basket} />
-					<Route path={"/beer-details/:beerId"} component={BeerDetails} />
+					<Route exact path="/punk-beer" component={Browse} />
+					<Route path={"/punk-beer/beers/:query"} component={SearchResult} />
+					<Route path="/punk-beer/basket" component={Basket} />
+					<Route path={"/punk-beer/beer-details/:beerId"} component={BeerDetails} />
 				</Switch>
 				<Footer />
 			</div>

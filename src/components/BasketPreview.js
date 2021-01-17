@@ -106,7 +106,7 @@ const BasketPreview = ({ closeBasketPreview }) => {
         <span
           className="view-basket"
           onClick={() => {
-            history.push("/basket");
+            history.push("/punk-beer/basket");
             closeBasketPreview()
           }}
         >
