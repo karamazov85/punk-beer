@@ -20,12 +20,12 @@ const Header = () => {
     <>
       <div className="header-grid">
         <div className="logo-container">
-          <Link to="/browse">
+          <Link to="/">
             <img src={logo} alt="brewdod-logo" className="logo" />
           </Link>
         </div>
         <div className="header-menu-grid">
-          <Link to="/browse">
+          <Link to="/">
             <p>Browse</p>
           </Link>
           <Link to="/basket">
