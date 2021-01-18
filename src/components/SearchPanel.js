@@ -18,7 +18,8 @@ const SearchPanel = () => {
       <SearchForm selectedSearchType={searchType} {...searchFormProps} />
       <form className="searchtype-dropdown">
         <label>Search by:</label>
-        <select name="search-by" onChange={handleDropdownChange}>
+        <div className="select-container">
+          <select name="search-by" onChange={handleDropdownChange}>
           <option value="beer_name">Beer name</option>
           <option value="abv_gt">Min. abv</option>
           <option value="abv_lt">Max. abv</option>
@@ -30,6 +31,7 @@ const SearchPanel = () => {
           <option value="hops">Hops</option>
           <option value="malt">Malt</option>
         </select>
+        </div>
       </form>
     </div>
   );
