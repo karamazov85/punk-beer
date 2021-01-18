@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { addToBasket, setBasketTotal} from "../redux/basket/basketSlice";
 import { addPrice, applyCurrency } from "../redux/search/search.utils";
 import { useFetch } from "../redux/search/search.hooks";
+import useSpinner from "./hooks/useSpinner";
 import Modal from "../components/Modal";
 import "../styles/BeerDetails.styles.scss";
 import {
@@ -11,6 +12,7 @@ import {
 } from "../redux/search/search.utils";
 
 const BeerDetails = () => {
+  const [spinner, showLoadingSpinner, hideLoadingSpinner] = useSpinner();
   
   const [selectBeerData, setSelectBeerData] = useState({
     id: null, 
@@ -35,21 +37,27 @@ const BeerDetails = () => {
   const { beer } = useFetch(beerId)
 
   useEffect(() => {
+    showLoadingSpinner()
     if(beer) {
         const beerPricedInGBP = addPrice(beer)
         const beerWithCurrency = applyCurrency(beerPricedInGBP, currencyCode);
         const selectBeerData = getSelectedBeerDetails(beerWithCurrency);
         setSelectBeerData(selectBeerData)
         window.scrollTo(0, 0);
+        setTimeout(() => { // give some extra time for React to repaint the DOM, we don't wanna see that
+          hideLoadingSpinner()
+        }, 100);
     } 
   }, [beer])
   
   useEffect(() => {
+    showLoadingSpinner()
     if(beer) {
        const beerPricedInGBP = addPrice(beer) 
        const beerWithCurrency = applyCurrency(beerPricedInGBP, currencyCode);
        const selectBeerData = getSelectedBeerDetails(beerWithCurrency);
-      setSelectBeerData(selectBeerData)
+       setSelectBeerData(selectBeerData)
+       hideLoadingSpinner()
     }
   }, [currencyCode])
 
@@ -93,6 +101,7 @@ const BeerDetails = () => {
 
   return (
     <div className="container">
+      {spinner}
       <div className="main">
         <div className="info-block-1">
           <div className="headline">
