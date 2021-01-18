@@ -41,7 +41,7 @@ const Browse = () => {
           <ProductCard key={beer.id} beer={beer} />
         ))}
       </div>
-      <Pagination onPaginationChange={setNewPaginationParams} onFullStockClick={fullStockClicked}/>
+      <Pagination onPaginationChange={setNewPaginationParams} onFullStockClick={fullStockClicked} renderFullStockButton={true}/>
     </div>
   )
 };

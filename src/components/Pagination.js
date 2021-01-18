@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import PaginationButton from "./PaginationButton";
 import "../styles/PaginationStyle.scss";
 
-const Pagination = ({ onPaginationChange, onFullStockClick }) => {
+const Pagination = ({ onPaginationChange, onFullStockClick, renderFullStockButton }) => {
   const [pagination, setPagination] = useState({ page: 1, per_page: 10 })
 
   const handlePageNumClick = (e) => {
@@ -56,9 +56,10 @@ const Pagination = ({ onPaginationChange, onFullStockClick }) => {
           <PaginationButton onClick={handleProductsPerPageClick} value={40}>
             40
           </PaginationButton>
-          <PaginationButton onClick={() => onFullStockClick()} >
-            Full stock!
-          </PaginationButton>
+            { renderFullStockButton ? 
+              <PaginationButton onClick={() => onFullStockClick()} >
+                Full stock!
+              </PaginationButton> : null }
         </div>
       </div>
     </div>

@@ -29,6 +29,7 @@ const SearchResults = () => {
   },[search, newPaginationParams, dispatch])
 
   useEffect(() => {
+    window.scrollTo(0,0);
     hideLoadingSpinner()
   }, [searchResult])
 
@@ -50,7 +51,7 @@ const SearchResults = () => {
               BACK TO BROWSE
             </Link>
         </div>
-      <Pagination onPaginationChange={setNewPaginationParams}/>
+      <Pagination onPaginationChange={setNewPaginationParams} renderFullStockButton={false}/>
     </div>
   );
 };
