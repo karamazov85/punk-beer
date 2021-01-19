@@ -19,7 +19,7 @@ function App() {
 					<Route exact path="/punk-beer" component={Browse} />
 					<Route path="/punk-beer/beers/:query" component={SearchResult} />
 					<Route path="/punk-beer/basket" component={Basket} />
-					<Route path="/punk-beer/beer-details/:beerId" component={BeerDetails} />
+					<Route path={process.env.PUBLIC_URL + "/beer-details/:beerId"} component={BeerDetails} />
 				</Switch>
 				<Footer />
 			</div>
