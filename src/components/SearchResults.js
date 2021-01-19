@@ -24,7 +24,7 @@ const SearchResults = () => {
   useEffect(() => {
     showLoadingSpinner()
     const queryString = updateQueryStringWithNewPaginationParams(search, newPaginationParams); 
-    history.push(`/punk-beer/beers/search/${queryString}`)
+    history.push(`/beers/search/${queryString}`)
     dispatch(fetchBeersAsync(queryString))
   },[search, newPaginationParams, dispatch])
 
@@ -47,7 +47,7 @@ const SearchResults = () => {
         ))}
       </div>
         <div className="back-to-browse-container">
-            <Link to="/punk-beer" className="back-to-browse-link">
+            <Link to="/" className="back-to-browse-link">
               BACK TO BROWSE
             </Link>
         </div>
