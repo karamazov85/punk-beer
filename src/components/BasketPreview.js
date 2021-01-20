@@ -18,7 +18,12 @@ const BasketPreview = ({ closeBasketPreview }) => {
   const history = useHistory();
 
   useEffect(() => {
+    let mounted = true;
     dispatch(setBasketItemsCount());
+
+    return () => {
+      mounted = false;
+    }
   },[dispatch])
 
   return (

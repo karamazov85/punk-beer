@@ -16,7 +16,12 @@ const Pagination = ({ onPaginationChange, onFullStockClick, renderFullStockButto
   };
 
   useEffect(() => {
+    let mounted = true;
     onPaginationChange(pagination)
+
+    return () => {
+      mounted = false;
+    }
   }, [pagination, onPaginationChange])
 
   return (

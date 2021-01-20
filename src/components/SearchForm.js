@@ -39,7 +39,12 @@ const SearchForm = ({ selectedSearchType, name, placeholder }) => {
 
   // on mount, send batch request to get data for autocomplete into redux store
   useEffect(() => {
+    let mounted = true;
     dispatch(fetchDataForAutoComplete());
+
+    return () => {
+      mounted = false;
+    }
   }, [dispatch]);
 
   return (

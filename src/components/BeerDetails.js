@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { addToBasket, setBasketTotal} from "../redux/basket/basketSlice";
 import { addPrice, applyCurrency } from "../redux/search/search.utils";
@@ -28,6 +28,12 @@ const BeerDetails = () => {
   // get id from URL
   const params = useParams();
   const { beerId } = params;
+
+  const history = useHistory()
+
+  if (parseInt(beerId) > 325 || isNaN(parseInt(beerId))) {
+    history.push("/beer-404")
+  }
   
   // other Redux stuff
   const dispatch = useDispatch()
@@ -37,6 +43,7 @@ const BeerDetails = () => {
   const { beer } = useFetch(beerId)
 
   useEffect(() => {
+    let mounted = true;
     showLoadingSpinner()
     if(beer) {
         const beerPricedInGBP = addPrice(beer)
@@ -47,10 +54,16 @@ const BeerDetails = () => {
         setTimeout(() => { // give some extra time for React to repaint the DOM, we don't wanna see that
           hideLoadingSpinner()
         }, 100);
-    } 
+    }
+
+    return () => {
+      mounted = false 
+    }
+
   }, [beer])
   
   useEffect(() => {
+    let mounted = true;
     showLoadingSpinner()
     if(beer) {
        const beerPricedInGBP = addPrice(beer) 
@@ -58,6 +71,10 @@ const BeerDetails = () => {
        const selectBeerData = getSelectedBeerDetails(beerWithCurrency);
        setSelectBeerData(selectBeerData)
        hideLoadingSpinner()
+    }
+
+    return () => {
+      mounted = false 
     }
   }, [currencyCode])
 

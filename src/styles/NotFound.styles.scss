@@ -1,0 +1,14 @@
+.not-found-wrapper {
+  margin: 0 auto;
+  padding: 100px 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  & img {
+    height: 400px;
+    transform: rotate(-180deg);
+    padding: 30px 30px;
+  }
+}

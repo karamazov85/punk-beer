@@ -20,13 +20,23 @@ const Browse = () => {
   }
 
   useEffect(() => {
+    let mounted = true;
     showLoadingSpinner()
     const newQueryString = updateQueryStringWithNewPaginationParams(undefined, newPaginationParams); 
     dispatch(fetchBeersAsync(newQueryString))
+
+    return () => {
+      mounted = false;
+    }
   },[newPaginationParams, dispatch])
 
   useEffect(() => {
+    let mounted = true;
     hideLoadingSpinner()
+
+    return () => {
+      mounted = false;
+    }
   },[searchResult])
   
   return ( 

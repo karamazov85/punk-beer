@@ -6,6 +6,8 @@ import SearchResult from "./components/SearchResults";
 import Basket from "./components/Basket";
 import Footer from "./components/Footer";
 import BeerDetails from "./components/BeerDetails";
+import NoSuchBeer from "./components/NoSuchBeer";
+import NotFound from "./components/NotFound";
 import "./styles/App.scss"
 
 function App() {
@@ -19,7 +21,9 @@ function App() {
 					<Route exact path="/" component={Browse} />
 					<Route path="/beers/:query" component={SearchResult} />
 					<Route path="/basket" component={Basket} />
-					<Route path={"/beer-details/:beerId"} component={BeerDetails} />
+					<Route path="/beer-details/:beerId" component={BeerDetails} />
+					<Route path="/beer-404" component={NoSuchBeer}/>
+					<Route component={NotFound} />
 				</Switch>
 				<Footer />
 			</div>

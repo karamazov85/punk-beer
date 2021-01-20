@@ -42,7 +42,7 @@ const Footer = () => {
         <li>Company Information</li>
       </div>
       <div className="country-select">
-        <p>Country:</p>
+        <p>Currency:</p>
         <form>
           <select onChange={handleChange}>
             <option>GBP</option>

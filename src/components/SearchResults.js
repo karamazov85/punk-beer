@@ -22,15 +22,25 @@ const SearchResults = () => {
   const [newPaginationParams, setNewPaginationParams] = useState({ page: 1, per_page: 10 });
 
   useEffect(() => {
+    let mounted = true;
     showLoadingSpinner()
     const queryString = updateQueryStringWithNewPaginationParams(search, newPaginationParams); 
     history.push(`/beers/search/${queryString}`)
     dispatch(fetchBeersAsync(queryString))
+
+    return () => {
+      mounted = false;
+    }
   },[search, newPaginationParams, dispatch])
 
   useEffect(() => {
+    let mounted = true;
     window.scrollTo(0,0);
     hideLoadingSpinner()
+
+    return () => {
+      mounted = false;
+    }
   }, [searchResult])
 
 
