@@ -1,4 +1,4 @@
-A webshop app using the public Punk API to query the beer selection of Scottish brewing company BrewDog.
+A webshop app using the public Punk REST API to query the beer selection of Scottish brewing company BrewDog.
 (NOTE: I have no affiliation with BrewDog and the API is not official).
 
 ##Stack:
