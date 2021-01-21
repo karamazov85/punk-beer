@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { addToBasket, setBasketTotal } from "../redux/basket/basketSlice";
+import { addToBasket, setBasketTotal, setBasketItemsCount } from "../redux/basket/basketSlice";
 import "../styles/ProductCard.scss";
 
 const ProductCard = ({ beer }) => {
@@ -35,6 +35,7 @@ const ProductCard = ({ beer }) => {
     }
     dispatch(addToBasket({beer, quantity}));
     dispatch(setBasketTotal())
+    dispatch(setBasketItemsCount())
     setQuantity(1);
   };
 

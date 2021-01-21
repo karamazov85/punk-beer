@@ -14,10 +14,10 @@
   @media (max-width: 551px) {
     grid-column: 1 / 2;
     grid-row: 2;
-    width: 320px;
   }
 
   & .TotalHeader {
+    width: 100%;
     grid-row: 1;
     height: 80px;
     display: flex;
@@ -68,24 +68,48 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 45px;
 
       @media (max-width: 1160px) {
         min-height: 140px;
         flex-direction: column;
-        gap: 5px;
       }
 
       @media (max-width: 880px) {
         height: 80px;
         flex-direction: row;
         min-height: 100px;
-        gap: 5px;
       }
 
       .paypal-checkout-button {
+        margin-right: 20px;
+
         @media (max-width: 1160px) {
           width: 150px;
+          margin-right: 0px;
+        }
+
+        @media (max-width: 880px) {
+          margin-right: 20px;
+        }
+
+        @media (max-width: 551px) {
+          margin-right: 2px;
+        }
+      }
+
+      .stripe-checkout-button {
+        margin-left: 20px;
+
+        @media (max-width: 1160px) {
+          margin-left: 0px;
+        }
+
+        @media (max-width: 880px) {
+          margin-left: 20px;
+        }
+
+        @media (max-width: 551px) {
+          margin-left: 2px;
         }
       }
 

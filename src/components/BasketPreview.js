@@ -20,7 +20,6 @@ const BasketPreview = ({ closeBasketPreview }) => {
   useEffect(() => {
     let mounted = true;
     dispatch(setBasketItemsCount());
-
     return () => {
       mounted = false;
     }
@@ -31,9 +30,11 @@ const BasketPreview = ({ closeBasketPreview }) => {
       <div className="basket-preview-header">
         <div className="basket-items-number-container">
           <span>Items in your basket:</span>
-          <span className="basket-preview-items-number">
-            {basketItemsCount}
-          </span>
+          <div>
+            <span className="basket-preview-items-number">
+              {basketItemsCount}
+            </span>
+          </div>
         </div>
         <span className="close-basket-preview" onClick={closeBasketPreview}>
           {" "}
