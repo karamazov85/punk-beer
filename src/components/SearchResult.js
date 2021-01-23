@@ -36,6 +36,11 @@ const SearchResult = () => {
 
   useEffect(() => {
     let mounted = true;
+    
+    if (searchResult.length === 0) {
+      history.push("/beer-404");
+    }
+    
     window.scrollTo(0,0);
     hideLoadingSpinner()
 

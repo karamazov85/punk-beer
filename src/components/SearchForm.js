@@ -2,21 +2,27 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { fetchDataForAutoComplete } from "../redux/search/searchSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { getSearchInputType } from "../helpers/searchPanelInputTypes";
+import InputAlert from "./InputAlert";
 import Autocomplete from "./Autocomplete";
+import { validateInput } from "../redux/search/search.utils";
 
-const SearchForm = ({ selectedSearchType, name, placeholder }) => {
+const SearchForm = ({ selectedSearchType }) => {
   const [newSearchText, setNewSearchText] = useState("");
   const [displayAutoComplete, setDisplayAutoComplete] = useState(false);
   const [options, setOptions] = useState(null);
-  
   const dispatch = useDispatch();
   const dataForAutoComplete = useSelector(state => state.search.dataForAutoComplete);
-  
   const history = useHistory();
+
+  const { name, type, placeholder } = getSearchInputType(selectedSearchType);
+  const [invalidInput, setInvalidInput] = useState(false)
 
   const handleInputClick = () => {
     // put the autocomplete data that we need based on searchType into component state
     setOptions(dataForAutoComplete[name]);
+    setNewSearchText("");
+    setInvalidInput(false)
   };
 
   const handleChange = (e) => {
@@ -32,6 +38,19 @@ const SearchForm = ({ selectedSearchType, name, placeholder }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if(!newSearchText) {
+      setInvalidInput(true)
+      return; 
+    }
+
+    const isValid = validateInput(newSearchText, type)
+    
+    if(!isValid) {
+      setInvalidInput(true)
+      return;
+    }
+
     history.push(`/search/beer?${selectedSearchType}=${newSearchText}&page=1&per_page=10`);
     setNewSearchText("");
     setDisplayAutoComplete(false);
@@ -53,7 +72,7 @@ const SearchForm = ({ selectedSearchType, name, placeholder }) => {
         className={`searchFieldInput ${
           displayAutoComplete ? "displayAutoCompleteActive" : ""
         }`}
-        type={selectedSearchType}
+        type={type}
         name={name}
         value={newSearchText}
         placeholder={placeholder}
@@ -61,6 +80,7 @@ const SearchForm = ({ selectedSearchType, name, placeholder }) => {
         onClick={handleInputClick}
         onChange={handleChange}
       />
+      {invalidInput ? <InputAlert /> : null}
       <Autocomplete
         options={options}
         displayAutoComplete={displayAutoComplete}

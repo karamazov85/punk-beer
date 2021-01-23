@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { getSearchInputType } from "../helpers/searchPanelInputTypes";
 import SearchForm from "./SearchForm";
 import "../styles/SearchPanel.styles.scss";
 
@@ -11,11 +10,9 @@ const SearchPanel = () => {
     setSearchType(e.target.value.toLowerCase());
   };
 
-  const searchFormProps = getSearchInputType(searchType);
-
   return (
     <div className="panel-flex">
-      <SearchForm selectedSearchType={searchType} {...searchFormProps} />
+      <SearchForm selectedSearchType={searchType} />
       <form className="searchtype-dropdown">
         <label>Search by:</label>
         <div className="select-container">

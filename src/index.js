@@ -9,7 +9,8 @@ import App from './App';
 // local storage 
 store.subscribe(() => {
   saveState({
-    basket: store.getState().basket
+    basket: store.getState().basket,
+    search: store.getState().search
   })
 });
 

@@ -1,5 +1,6 @@
 import { convertShortDateToISO } from "../../helpers/dateconverter";
 import { currencyConverter } from "../../helpers/currencyconverter";
+import { getSearchInputType} from "../../helpers/searchPanelInputTypes";
 
 export async function fetchBeers(
   queryString
@@ -218,7 +219,6 @@ export const getFilterParamsFromQuery = (filterQuery) => {
 }
 
 // FILTER 
-
 export const filter = (searchResult, filterParams) => {
 
   if(!searchResult || !filterParams) {
@@ -255,7 +255,6 @@ export const filterByMaxPrice = (searchResult, price) => {
 };
 
 export const filterByBrewDate = (searchResult, date) => {
-  debugger
   const selectedDateUTC = new Date(date);
   const beerWithFormattedDates = searchResult.map((beer) => {
     const brewDateISO = convertShortDateToISO(beer.first_brewed);
@@ -277,7 +276,6 @@ export const applyCurrency = (withPrice, currencyCode) => {
       return beer;
     });
     return withCurrentCurrency;
-
   } else {
     withPrice.price = currencyConverter(withPrice.price_GBP, currencyCode)
     return withPrice;
@@ -327,3 +325,15 @@ export const getSelectedBeerDetails = (beer) => {
     description,
   };
 };
+
+export const validateInput = (newSearchText, type) => {
+
+  if(type === "number") {
+    return true;
+  }
+
+  if(type === "text" && !isNaN(newSearchText)) {
+    return false;
+  }
+  return true
+}

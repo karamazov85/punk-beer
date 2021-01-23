@@ -54,10 +54,7 @@
     height: 50px;
     border: 1px solid var(--clr-accent-700);
     border-radius: 0px;
-
-    // @media (max-width: 660px) {
-
-    // }
+    position: relative;
 
     @media (max-width: 550px) {
       margin-bottom: 5px;
@@ -90,15 +87,6 @@
       background-color: white;
       border: 1px solid var(--clr-neutral-900);
       cursor: pointer;
-    }
-
-    // @media (max-width: 660px) {
-    //   width: 110px;
-    //   height: 40px;
-    //   font-size: 1.2rem;
-    // }
-
-    @media (max-width: 550px) {
     }
   }
 
