@@ -9,4 +9,4 @@ Uses `react-paypal-button` and `react-stripe-checkout` for mock payment popups.
 
 Demo: https://priceless-leakey-11d134.netlify.app/
 
-This is a work in progress. Next steps: Login using Google Auth + possible Firebase integration.
+This is a work in progress, I'm continuously improving the app. Next steps: Login using Google Auth + possible Firebase integration.
