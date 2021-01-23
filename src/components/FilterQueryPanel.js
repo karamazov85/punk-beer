@@ -1,13 +1,18 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { filterSearchResultByName, filterSearchResultByMinPrice, filterSearchResultByMaxPrice, filterSearchResultByBrewDate } from "../redux/search/searchSlice";
 import CustomInput from "../components/CustomInput";
+import { validateInput } from "../redux/search/search.utils";
+import InputAlert from "./InputAlert";
 
 const FilterQueryPanel = ({ inputParams }) => {
   const [formData, setFormData] = useState({ id: "", type: "", value: null, name:"" });
-  const dispatch = useDispatch()
+  const [invalidInput, setInvalidInput] = useState(false)
   const history = useHistory()
+
+  const handleInputClick = () => {
+    setInvalidInput(false)
+    
+  }
 
   const handleChange = (e) => {
     setFormData({
@@ -20,16 +25,30 @@ const FilterQueryPanel = ({ inputParams }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    history.push(`/filter/beer?${formData.name}=${formData.value}`)
+
+    if(!formData.value) {
+      setInvalidInput(true)
+      return;
+    }
+
+    const isValid = validateInput(formData.value, formData.type)
+    
+    if(!isValid) {
+      setInvalidInput(true)
+      return;
+    } 
+
+    history.push(`/filter/beer?${formData.name || "brewed since"}=${formData.value}`)
   };
 
   return (
     <>
       <form className="filter-query-form" onSubmit={handleSubmit}>
-        <CustomInput inputParams={inputParams} onChange={handleChange} />
+        <CustomInput inputParams={inputParams} onChange={handleChange} onClick={handleInputClick}/>
         <button className="filter-query-submit" type="submit">
           Filter
         </button>
+        {invalidInput ? <InputAlert /> : null}
       </form>
     </>
   );

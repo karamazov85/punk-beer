@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useHistory } from "react-router-dom";
 import { getFilterParamsFromQuery } from "../redux/search/search.utils";
 import { filterResults } from "../redux/search/searchSlice";
 import useSpinner from "./hooks/useSpinner";
@@ -14,6 +14,7 @@ const FilterResult = () => {
     const filterQuery = location.search; 
     const dispatch = useDispatch()
     const filteredResult = useSelector(state => state.search.filteredResult); 
+    const history = useHistory()
 
     useEffect(() => {
         let mounted = true 
@@ -21,11 +22,21 @@ const FilterResult = () => {
         const filterParams = getFilterParamsFromQuery(filterQuery);
         dispatch(filterResults(filterParams))
         hideLoadingSpinner()
-        
+
         return () => {
             mounted = false;
         }
     },[filterQuery, dispatch])
+
+    // useEffect(() => {
+    //     let mounted = true 
+    //     if(filteredResult.length === 0) {
+    //         history.push("/beer-404")
+    //     }
+    //     return () => {
+    //         mounted = false;
+    //     }
+    // }, [filteredResult])
 
     return (
         <div className="browse-container">

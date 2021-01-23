@@ -4,3 +4,8 @@ export const convertShortDateToISO = (shortDate) => {
   const formatted = reversed.join("");
   return formatted;
 };
+
+export const convertDateToYear = (shortDate) => {
+  const year = shortDate.split("/")[1];
+  return year;
+}

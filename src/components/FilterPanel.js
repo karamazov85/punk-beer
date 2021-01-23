@@ -59,9 +59,9 @@ const FilterPanel = () => {
         <li
           onClick={() =>
             handleClick({
-              type: "month",
+              type: "select",
               placeholder: "Enter a date",
-              name: "brewed since",
+              name: "brewedsince",
               id: "brewdate",
             })
           }

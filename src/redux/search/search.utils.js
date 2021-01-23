@@ -1,4 +1,4 @@
-import { convertShortDateToISO } from "../../helpers/dateconverter";
+import { convertShortDateToISO, convertDateToYear } from "../../helpers/dateconverter";
 import { currencyConverter } from "../../helpers/currencyconverter";
 import { getSearchInputType} from "../../helpers/searchPanelInputTypes";
 
@@ -226,7 +226,7 @@ export const filter = (searchResult, filterParams) => {
   }
   const filterType = filterParams.filterType;
   const filterQuery = filterParams.filterQuery;
-
+  debugger
   switch (filterType) {
       case "beername":
         return filterByName(searchResult, filterQuery)  
@@ -267,6 +267,17 @@ export const filterByBrewDate = (searchResult, date) => {
     (beer) => beer.first_brewed_UTC >= selectedDateUTC
   );
 };
+
+export const filterByBrewYear = (searchResult, year) => {
+  const selectedYear = new Date(year);
+  const beerswithFormattedDates = searchResult.map(beer => {
+    const brewYear = convertDateToYear(beer.first_brewed)
+    beer.first_brewed_year = brewYear;
+    return beer;
+  })
+
+  return beerswithFormattedDates.filter(beer => beer.first_brewed_year >= selectedYear)
+}
 
 export const applyCurrency = (withPrice, currencyCode) => {
   
@@ -335,5 +346,10 @@ export const validateInput = (newSearchText, type) => {
   if(type === "text" && !isNaN(newSearchText)) {
     return false;
   }
+
+  if(type === "select" && isNaN(newSearchText)) {
+    return false 
+  }
+
   return true
 }
