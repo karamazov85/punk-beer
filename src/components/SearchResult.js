@@ -9,15 +9,16 @@ import ProductCard from "./ProductCard";
 import Pagination from "./Pagination";
 import "../styles/SearchResults.styles.scss";
 
-const SearchResults = () => {
+const SearchResult = () => {
   const [spinner, showLoadingSpinner, hideLoadingSpinner] = useSpinner();
 
   const location = useLocation()
   const { search } = location;
-  const history = useHistory()
 
   const searchResult = useSelector(state => state.search.searchResult);
   const dispatch = useDispatch();
+  
+  const history = useHistory()
   
   const [newPaginationParams, setNewPaginationParams] = useState({ page: 1, per_page: 10 });
 
@@ -25,7 +26,7 @@ const SearchResults = () => {
     let mounted = true;
     showLoadingSpinner()
     const queryString = updateQueryStringWithNewPaginationParams(search, newPaginationParams); 
-    history.push(`/beers/search/${queryString}`)
+    history.push(`/search/beer${queryString}`)
     dispatch(fetchBeersAsync(queryString))
 
     return () => {
@@ -66,4 +67,4 @@ const SearchResults = () => {
   );
 };
 
-export default SearchResults;
+export default SearchResult;

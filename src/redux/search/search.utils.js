@@ -199,22 +199,64 @@ export const sortABVhighToLow = (searchResult) => {
   return sorted;
 };
 
+
+export const getFilterParamsFromQuery = (filterQuery) => {
+  if(!filterQuery) {
+    return;
+  }
+
+  const queryIterator = new URLSearchParams(filterQuery);
+  
+  let paramsMap = new Map();
+  // queryObj.entries() is iterable but it's not an array so we do a for-of loop.
+  for (let pair of queryIterator.entries()) {
+    paramsMap.set("filterType", pair[0])  
+    paramsMap.set("filterQuery", pair[1])
+  }
+  const paramsObj = Object.fromEntries(paramsMap)
+  return paramsObj;
+}
+
+// FILTER 
+
+export const filter = (searchResult, filterParams) => {
+
+  if(!searchResult || !filterParams) {
+    return;
+  }
+  const filterType = filterParams.filterType;
+  const filterQuery = filterParams.filterQuery;
+
+  switch (filterType) {
+      case "beername":
+        return filterByName(searchResult, filterQuery)  
+      case "min. price":
+        return filterByMinPrice(searchResult, filterQuery)
+      case "max. price":
+        return filterByMaxPrice(searchResult, filterQuery)
+      case "brewed since":
+        return filterByBrewDate(searchResult, filterQuery)
+      default:
+        break;
+    }
+}
+
 export const filterByName = (searchResult, name) => {
   const regex = new RegExp(`^${name}`, "ig");
   return searchResult.filter((beer) => beer.name.match(regex));
 };
 
 export const filterByMinPrice = (searchResult, price) => {
-  return searchResult.filter((beer) => beer.price >= price);
+  return searchResult.filter((beer) => beer.price >= Number(price));
 };
 
 export const filterByMaxPrice = (searchResult, price) => {
-  return searchResult.filter((beer) => beer.price <= price);
+  return searchResult.filter((beer) => beer.price <= Number(price));
 };
 
 export const filterByBrewDate = (searchResult, date) => {
+  debugger
   const selectedDateUTC = new Date(date);
-
   const beerWithFormattedDates = searchResult.map((beer) => {
     const brewDateISO = convertShortDateToISO(beer.first_brewed);
     const brewDateUTC = new Date(brewDateISO);

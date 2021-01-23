@@ -1,11 +1,12 @@
 
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchBeers, addPrice, fetchAllBeers, prepDataForAutoComplete, sortAtoZ, sortZtoA, sortByDate, sortABVhighToLow, sortABVlowToHigh, filterByName, filterByMinPrice, filterByMaxPrice, filterByBrewDate, applyCurrency, getCurrencySign } from "./search.utils";
+import { fetchBeers, addPrice, fetchAllBeers, prepDataForAutoComplete, sortAtoZ, sortZtoA, sortByDate, sortABVhighToLow, sortABVlowToHigh, filter, applyCurrency, getCurrencySign } from "./search.utils";
 
 export const slice = createSlice({
     name: "search", 
     initialState: {
         searchResult: [],
+        filteredResult: [],
         isFetching: false,
         dataForAutoComplete: {},
         currencyCode: "GBP",
@@ -50,21 +51,9 @@ export const slice = createSlice({
             const sorted = sortABVlowToHigh(state.searchResult);
             state.searchResult = sorted; 
         },
-        filterSearchResultByName: (state, action) => {
-            const filtered = filterByName(state.searchResult, action.payload);
-            state.searchResult = filtered; 
-        },
-        filterSearchResultByMinPrice: (state, action) => {
-            const filtered = filterByMinPrice(state.searchResult, action.payload);
-            state.searchResult = filtered;
-        },
-        filterSearchResultByMaxPrice: (state, action) => {
-            const filtered = filterByMaxPrice(state.searchResult, action.payload);
-            state.searchResult = filtered;
-        },
-        filterSearchResultByBrewDate: (state, action) => {
-            const filtered = filterByBrewDate(state.searchResult, action.payload);
-            state.searchResult = filtered;
+        filterResults: (state, action) => {
+            const filtered = filter(state.searchResult, action.payload);
+            state.filteredResult = filtered; 
         },
         setPricesInNewCurrencyInSearch: (state, action) => {
             const beersInNewCurrency = applyCurrency(state.searchResult, action.payload);
@@ -81,7 +70,7 @@ export const slice = createSlice({
     }
 });     
 
-export const { setSearchParams, setIsFetchingTrue, setIsFetchingFalse, setSearchResult, setDataForAutoComplete, setSearchComplete, sortSearchResultAtoZ, sortSearchResultZtoA, sortSearchResultByDate, sortByAbvHighToLow, sortByAbvLowToHigh, filterSearchResultByName, filterSearchResultByMinPrice, filterSearchResultByMaxPrice, filterSearchResultByBrewDate, setPricesInNewCurrencyInSearch, setNewCurrencySignInSearch, setNewCurrencyCodeInSearch} = slice.actions;
+export const { setSearchParams, setIsFetchingTrue, setIsFetchingFalse, setSearchResult, setDataForAutoComplete, setSearchComplete, sortSearchResultAtoZ, sortSearchResultZtoA, sortSearchResultByDate, sortByAbvHighToLow, sortByAbvLowToHigh, filterResults, setPricesInNewCurrencyInSearch, setNewCurrencySignInSearch, setNewCurrencyCodeInSearch} = slice.actions;
 
 // THUNKS
 export const fetchBeersAsync = queryString => async (dispatch, getState) => {

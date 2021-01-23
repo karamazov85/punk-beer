@@ -19,7 +19,7 @@ const FilterPanel = () => {
             handleClick({
               type: "text",
               placeholder: "Enter beer name",
-              name: "beer name",
+              name: "beername",
               id: "beername",
             })
           }
