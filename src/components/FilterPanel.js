@@ -61,7 +61,7 @@ const FilterPanel = () => {
             handleClick({
               type: "select",
               placeholder: "Enter a date",
-              name: "brewedsince",
+              name: "brewed since",
               id: "brewdate",
             })
           }
