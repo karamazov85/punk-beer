@@ -5,7 +5,7 @@ export const useFetch = (beerId) => {
     const [beer, setBeer] = useState(null); 
     useEffect(() => {
         
-        // use the fetch() API built-in abort controller object to prevent race conditions
+        // use the fetch API's built-in abort controller object to prevent race conditions
         const abortCtrl = new AbortController();
         const opts = { signal: abortCtrl.signal}
 
