@@ -10,10 +10,18 @@
   position: relative;
 
   & .filter-query-form {
+    width: 100%;
     margin-top: 10px;
     position: relative;
     display: flex;
     justify-self: flex-start;
+    justify-content: center;
+
+    @media (max-width: 550px) {
+      margin-top: 0;
+      flex-direction: column;
+      align-items: center;
+    }
 
     & .filter-query-submit {
       min-width: 120px;
@@ -33,10 +41,8 @@
         border: 1px solid var(--clr-neutral-900);
       }
 
-      @media (max-width: 520px) {
-        height: 50px;
-        width: 110px;
-        font-size: 1.2rem;
+      @media (max-width: 550px) {
+        margin-top: 5px;
       }
     }
   }
