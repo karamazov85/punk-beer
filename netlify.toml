@@ -5,5 +5,5 @@
 
 [[redirects]]
     from = "https://api.punkapi.com/v2/"
-    to = https://api.punkapi.com/v2/ :splat
+    to = "https://api.punkapi.com/v2/ :splat"
     status = 200
