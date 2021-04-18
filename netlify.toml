@@ -4,12 +4,9 @@
     status = 200
 
 [[redirects]]
-    from = "https://api.punkapi.com/v2/*"
+    from = "/beers"
     to = "https://api.punkapi.com/v2/:splat"
     status = 200
 
-[[headers]]
-  for = "/*"
-    [headers.values]
-    Access-Control-Allow-Origin = "*"
+
 
