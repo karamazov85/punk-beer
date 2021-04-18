@@ -4,7 +4,7 @@
     status = 200
 
 [[redirects]]
-    from = "/search"
+    from = "/beers"
     to = "https://api.punkapi.com/v2/:splat"
     status = 200
 
