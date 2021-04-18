@@ -3,8 +3,13 @@
     to = "/index.html"
     status = 200
 
+[[redirects]]
+    from = "https://api.punkapi.com/v2/*"
+    to = "https://api.punkapi.com/v2/:splat"
+    status = 200
+
 [[headers]]
-  # Define which paths this specific [[headers]] block will cover.
   for = "/*"
     [headers.values]
     Access-Control-Allow-Origin = "*"
+
