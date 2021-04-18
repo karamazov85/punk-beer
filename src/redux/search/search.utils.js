@@ -5,7 +5,7 @@ import { getSearchInputType} from "../../helpers/searchPanelInputTypes";
 export async function fetchBeers(
   queryString
 ) {
-  const res = await fetch(`https://api.punkapi.com/v2/beers${queryString}`);
+  const res = await fetch(`/cors-proxy/https://api.punkapi.com/v2/beers${queryString}`);
   const beers = await res.json();
   return beers;
 }
